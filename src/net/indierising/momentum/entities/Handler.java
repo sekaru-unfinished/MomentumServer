@@ -40,7 +40,6 @@ public class Handler {
 				newObject.properties.add(p);
 			}
 		}
-		Main.describe(newObject.properties);
 		return newObject;
 	}
 	

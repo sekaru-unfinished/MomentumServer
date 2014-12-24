@@ -61,8 +61,9 @@ public class Main {
 	
 	public static void describe(ArrayList<Property> properties){
 		for(int i = 0; i < properties.size(); i++){
-			System.out.println(properties.get(i).getName() + "--");
+			System.out.print(properties.get(i).getName() + " -- " + properties.get(i).getData() + "  --  ");
 			System.out.println(properties.get(i).getData().getClass().getName());
+			System.out.println("----");
 		}
 	}
 }

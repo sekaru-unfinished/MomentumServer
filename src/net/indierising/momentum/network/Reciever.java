@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.indierising.momentum.Functions;
+import net.indierising.momentum.Main;
 import net.indierising.momentum.entities.GameObject;
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.network.Network.Key;
@@ -22,6 +23,7 @@ public class Reciever extends Listener{
 			// generate a name for now, we'll add recieving names later
 			Functions.setProperty(object, "player-name", "Mali" + connection.getID());
 			// add the object to our big list of objects
+			Main.describe(object.properties);
 			Handler.gameObjects.add(object);
 			Network.server.sendToAllUDP(object);
 		} catch (IOException e) {
