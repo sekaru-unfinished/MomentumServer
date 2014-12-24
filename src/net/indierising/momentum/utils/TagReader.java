@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TagReader {
 	InputStream file; Reader reader; BufferedReader in;
-	ArrayList<String> lines = new ArrayList<String>();
+	public ArrayList<String> lines = new ArrayList<String>();
 	
 	public TagReader(InputStream file) {
 		this.file = file;
@@ -40,4 +40,16 @@ public class TagReader {
 		
 		return null;
 	}
+	
+	public String getTagName(int index){
+		String line = lines.get(index);
+		// clean our tagName field up so that we can get data with it
+		if(line.startsWith("<")){
+			line = line.substring(0, line.indexOf(">"));
+			line = line.replace("<", "");
+			line = line.replace(">","");
+		}
+		return line;
+	}
 }
+

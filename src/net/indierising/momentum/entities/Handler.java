@@ -30,12 +30,76 @@ public class Handler {
 			
 			// load data
 			reader.read();
-			
-			// go through the data and print it out.
+
+			// give the gameobject a name
+			String name = reader.findData("name");
+			newObject.properties.add(new Property(name,name));
 			for(int e = 0; e < reader.lines.size(); e++){
-				String line = reader.lines.get(e);
-				System.out.println(line);
+				// if its not the name attribute add it
+				if(!reader.lines.get(e).equals(name)){
+					// use the attribute name to store the attribute under and then get the associated data
+					// really ffucking long line, gets the variable type and stores it
+					newObject.properties.add(new Property(reader.getTagName(e),getVariable(reader.findData(reader.getTagName(e)))));
+				}
 			}
+			newObject.describe();
 		}
+	}
+	
+	public Object getVariable(String s){
+		Object object;
+		if(isInteger(s)){
+			object = Integer.parseInt(s);
+			return object;
+		}else if(isFloat(s)){
+			object = Float.parseFloat(s);
+			return object;
+		}else if(isBoolean(s)){
+			object = Boolean.parseBoolean(s);
+			return object;
+		}else if(isDouble(s)){
+			object = Double.parseDouble(s);
+			return object;
+		}else{
+			object = s;
+			return object;
+		}
+	}
+	
+	// finds out what variable the data is
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
+	}
+	
+	public static boolean isFloat(String s) {
+	    try { 
+	        Float.parseFloat(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
+	}
+	
+	public static boolean isBoolean(String s) {
+	    try { 
+	        Boolean.parseBoolean(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
+	}
+	
+	public static boolean isDouble(String s) {
+	    try { 
+	        Double.parseDouble(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    return true;
 	}
 }

@@ -4,12 +4,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.network.Network;
 import net.indierising.momentum.utils.TagReader;
 
 public class Main {
 	
 	static ArrayList<String> log = new ArrayList<String>();
+	static Handler handler;
 	
 	public static void main(String args[]){
 		// TODO error log in data folder
@@ -31,6 +33,13 @@ public class Main {
 			
 			// let us know where the server has started
 			log("Server started on: " + network.IP + " TCP: " + network.TCP_PORT + " UDP: " + network.UDP_PORT); 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// load all gameobjects needed
+		try {
+			handler = new Handler();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
