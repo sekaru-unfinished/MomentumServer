@@ -15,9 +15,8 @@ public class Reciever extends Listener{
 		if(object instanceof Key){
 			Key packet = (Key) object;
 			// send the block to this one user, just an example of sending.
-			
 			Network.server.sendToAllTCP(Handler.getGameObject("Block"));
-			System.out.println("keyCode: " + packet.keyCode + " pressed:" + packet.pressed);
+//			System.out.println("keyCode: " + packet.keyCode + " pressed:" + packet.pressed);
 		}
 	}
 	

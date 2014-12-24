@@ -84,7 +84,11 @@ public class Handler {
 			object = Float.parseFloat(s);
 			return object;
 		}else if(isBoolean(s)){
-			object = Boolean.parseBoolean(s);
+			if(s.equals("false")){
+				object = false;
+			}else{
+				object = true;
+			}
 			return object;
 		}else if(isDouble(s)){
 			object = Double.parseDouble(s);
@@ -115,12 +119,11 @@ public class Handler {
 	}
 	
 	public static boolean isBoolean(String s) {
-	    try { 
-	        Boolean.parseBoolean(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    }
-	    return true;
+		if(s.equals("true") || s.equals("false")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	public static boolean isDouble(String s) {
