@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.entities.Handler;
+import net.indierising.momentum.entities.Property;
 import net.indierising.momentum.network.Network;
 import net.indierising.momentum.utils.TagReader;
 
@@ -49,5 +50,13 @@ public class Main {
 		log.add(message);
 		// TODO save the log when exiting
 		System.out.println(message);
+	}
+	
+	
+	public static void describe(ArrayList<Property> properties){
+		for(int i = 0; i < properties.size(); i++){
+			System.out.println(properties.get(i).getName() + "--");
+			System.out.println(properties.get(i).getData().getClass().getName());
+		}
 	}
 }

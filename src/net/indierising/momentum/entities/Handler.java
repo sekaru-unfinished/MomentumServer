@@ -6,10 +6,11 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.indierising.momentum.Main;
 import net.indierising.momentum.utils.TagReader;
 
 public class Handler {
-	ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	static ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	
 	public Handler() throws IOException{
 		// find all files ending in .go
@@ -33,17 +34,45 @@ public class Handler {
 
 			// give the gameobject a name
 			String name = reader.findData("name");
-			newObject.properties.add(new Property(name,name));
+			// add our name property, name and the data for it are the same
+			
+			Property propertyTitle = new Property();
+			propertyTitle.setName(name);
+			propertyTitle.setData(name);
+			
+			newObject.properties.add(propertyTitle);
+			
 			for(int e = 0; e < reader.lines.size(); e++){
 				// if its not the name attribute add it
 				if(!reader.lines.get(e).equals(name)){
 					// use the attribute name to store the attribute under and then get the associated data
-					// really ffucking long line, gets the variable type and stores it
-					newObject.properties.add(new Property(reader.getTagName(e),getVariable(reader.findData(reader.getTagName(e)))));
+					// TODO add our own datatypes and methods for parsing them.
+					
+					Property p = new Property();
+					p.setName(reader.getTagName(e));
+					p.setData(getVariable(reader.findData(p.getName())));
+					
+					// add our property
+					newObject.properties.add(p);
 				}
 			}
-			newObject.describe();
+			gameObjects.add(newObject);
+			Main.describe(newObject.properties);
 		}
+	}
+	
+	public static GameObject getGameObject(String s){
+		for(int i = 0; i < gameObjects.size(); i++){
+			GameObject temp = gameObjects.get(i);
+			// temp created for readability
+			for(int e = 0; e < temp.properties.size(); i++){
+				// go through the properties and find the name property matching it
+				if(temp.properties.get(e).getName().equals(s)){
+					return temp;
+				}
+			}
+		}
+		return null;// should never happen but it might!
 	}
 	
 	public Object getVariable(String s){

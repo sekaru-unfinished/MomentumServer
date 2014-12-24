@@ -1,3 +1,5 @@
 <name>Block
-<x>32
-<y>32
+<x>32f
+<y>32f
+<width>32
+<height>32
