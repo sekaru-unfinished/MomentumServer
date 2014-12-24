@@ -22,7 +22,7 @@ public class Main {
 		}
 		
 		try {
-			// get the ort numbers from our config file
+			// get the port numbers from our config file
 			int tcp_port = Integer.parseInt(config.findData("tcp_port"));
 			int udp_port = Integer.parseInt(config.findData("udp_port"));
 			
