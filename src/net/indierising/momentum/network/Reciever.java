@@ -1,5 +1,10 @@
 package net.indierising.momentum.network;
 
+import java.io.File;
+import java.io.IOException;
+
+import net.indierising.momentum.Functions;
+import net.indierising.momentum.entities.GameObject;
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.network.Network.Key;
 
@@ -8,7 +13,21 @@ import com.esotericsoftware.kryonet.Listener;
 
 
 public class Reciever extends Listener{
-	public void connected (Connection connection) {}
+	public void connected (Connection connection) {
+		// on connect add a new game object
+		try {
+			GameObject object = Handler.loadGameObject(new File("data/entities/player.go"));
+			Functions.setProperty(object, "con-id", connection.getID());
+			
+			// generate a name for now, we'll add recieving names later
+			Functions.setProperty(object, "player-name", "Mali" + connection.getID());
+			// add the object to our big list of objects
+			Handler.gameObjects.add(object);
+			Network.server.sendToAllUDP(object);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void received (Connection connection, final Object object) {
 		// TODO handle key presses in whatever entity system we use

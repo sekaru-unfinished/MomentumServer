@@ -12,7 +12,6 @@ import net.indierising.momentum.utils.TagReader;
 public class Main {
 	
 	static ArrayList<String> log = new ArrayList<String>();
-	static Handler handler;
 	
 	public static void main(String args[]){
 		// TODO error log in data folder
@@ -33,18 +32,25 @@ public class Main {
 			Network network = new Network(config.findData("ip"),tcp_port,udp_port);
 			
 			// let us know where the server has started
-			log("Server started on: " + network.IP + " TCP: " + network.TCP_PORT + " UDP: " + network.UDP_PORT); 
+			log("Server started on: " + Network.IP + " TCP: " + Network.TCP_PORT + " UDP: " + Network.UDP_PORT); 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		// load all gameobjects needed
-		try {
-			handler = new Handler();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		}		
 	}
+	
+	// our loop for the server
+	Runnable update = new Runnable(){
+		public void run(){
+			try{
+				while (true){
+					for(int i = 0 ; i < Handler.gameObjects.size(); i++){
+						
+					}
+					Thread.sleep(1000L);
+				}
+		    }catch(InterruptedException iex) {}
+		}
+	};
 	
 	public static void log(String message){
 		log.add(message);
