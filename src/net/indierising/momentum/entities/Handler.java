@@ -12,6 +12,8 @@ import net.indierising.momentum.Main;
 import net.indierising.momentum.network.Network.PlayerPacket;
 import net.indierising.momentum.utils.TagReader;
 
+import org.newdawn.slick.geom.Vector2f;
+
 public class Handler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
 
@@ -56,7 +58,7 @@ public class Handler {
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
-		players.add(new Player(packet.connectionID,packet.username,x,y,Main.DIRECTION_DOWN));
+		players.add(new Player(packet. connectionID, packet.username, new Vector2f(x, y) ,Main.DIRECTION_DOWN));
 	}
 	
 	public static void logout(int connectionID) throws IOException{

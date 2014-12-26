@@ -4,6 +4,7 @@ import net.indierising.momentum.network.Network;
 import net.indierising.momentum.network.Network.Key;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends MovingEntity{
 	
@@ -11,9 +12,10 @@ public class Player extends MovingEntity{
 	private int connectionID;
 	private String username;
 	
-	public Player(int connectionID,String username,float x,float y,int direction){
-		// set our player up with the speed and a width and height of 32.
-		super(x,y,32,32,0.3f,direction);
+	public Player(int connectionID, String username, Vector2f pos,int direction){
+		// set our player up with the speed and a width and height of 32
+		super(pos, 32, 32, 0.3f, direction);
+		
 		this.setConnectionID(connectionID);
 		this.setUsername(username);
 	}

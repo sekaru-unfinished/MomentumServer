@@ -1,11 +1,13 @@
 package net.indierising.momentum.entities;
 
+import org.newdawn.slick.geom.Vector2f;
+
 public class MovingEntity extends Entity{
 	private float speed;
 	int direction;
 	
-	public MovingEntity(float x,float y,int width,int height,float speed,int direction){
-		super(x,y,width,height);
+	public MovingEntity(Vector2f pos, float width, float height, float speed, int direction){
+		super(pos, width, height);
 		this.setSpeed(speed);
 		this.direction = direction;
 	}
