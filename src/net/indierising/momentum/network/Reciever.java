@@ -22,10 +22,12 @@ public class Reciever extends Listener{
 			PlayerPacket packet = (PlayerPacket) object;
 			// start all players at location 32 x 32
 			try {
+				packet.connectionID = connection.getID();
 				Handler.addPlayer(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			Network.sendPlayer(connection.getID());
 			Network.sendMovement(connection.getID());
 		}
 		

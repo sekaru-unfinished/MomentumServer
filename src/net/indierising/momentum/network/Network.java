@@ -73,4 +73,15 @@ public class Network {
 			server.sendToAllUDP(packet);
 		}
 	}
+
+	public static void sendPlayer(int connectionID) {
+		Player player = Handler.getPlayerByID(connectionID);
+		PlayerPacket packet = new PlayerPacket();
+		packet.connectionID = connectionID;
+		packet.x = player.getX();
+		packet.y = player.getY();
+		packet.direction = player.getDirection();
+		packet.username = player.getUsername();
+		server.sendToAllTCP(packet);
+	}
 }
