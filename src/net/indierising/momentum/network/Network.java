@@ -58,15 +58,19 @@ public class Network {
 		public int connectionID;
 		public float x,y;
 		public int direction;
+		public String username;
 	}
 
 	public static void sendMovement(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
-		packet.connectionID = player.getConnectionID();
-		packet.x = player.getX();
-		packet.y = player.getY();
-		packet.direction = player.getDirection();
-		server.sendToAllUDP(packet);
+		if(player != null){
+			packet.connectionID = player.getConnectionID();
+			packet.x = player.getX();
+			packet.y = player.getY();
+			packet.direction = player.getDirection();
+			packet.username = player.getUsername();
+			server.sendToAllUDP(packet);
+		}
 	}
 }
