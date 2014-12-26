@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.indierising.momentum.entities.Entity;
 import net.indierising.momentum.entities.Handler;
+import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.entities.Player;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -40,12 +41,14 @@ public class Network {
 	public static void register (EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
 		
+
+		// register the classes we'll be transferring
 		kryo.register(Key.class);
-		// we send the gameobjects so register them
 		kryo.register(ArrayList.class);
 		
 		kryo.register(Entity.class);
 		kryo.register(PlayerPacket.class);
+		kryo.register(EntityPacket.class);
 	}
 	
 	// inputs
@@ -62,6 +65,13 @@ public class Network {
 		public float speed;
 		public String imageLocation;
 	}
+	
+	public static class EntityPacket{
+		public float x,y,speed;
+		public int direction;
+		public String imageLocation;
+		public int id;
+	}
 
 	public static void sendMovement(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
@@ -73,6 +83,30 @@ public class Network {
 		packet.username = player.getUsername();
 		packet.speed = player.getSpeed();
 		server.sendToAllUDP(packet);
+	}
+	
+	public static void sendNPCMovement(int id){
+		MovingEntity entity = Handler.getNPCByID(id);
+		EntityPacket packet = new EntityPacket();
+		packet.x = entity.getX();
+		packet.y = entity.getY();
+		packet.direction = entity.getDirection();
+		packet.speed = entity.getSpeed();
+		packet.imageLocation = entity.getImageLocation();
+		packet.id = id;
+		server.sendToAllUDP(packet);
+	}
+	
+	public static void sendNPC(int id){
+		MovingEntity entity = Handler.getNPCByID(id);
+		EntityPacket packet = new EntityPacket();
+		packet.x = entity.getX();
+		packet.y = entity.getY();
+		packet.direction = entity.getDirection();
+		packet.speed = entity.getSpeed();
+		packet.imageLocation = entity.getImageLocation();
+		packet.id = id;
+		server.sendToAllTCP(packet);
 	}
 
 	public static void sendPlayer(int connectionID) {

@@ -9,15 +9,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.Main;
+import net.indierising.momentum.network.Network;
 import net.indierising.momentum.network.Network.PlayerPacket;
 import net.indierising.momentum.utils.TagReader;
 
 public class Handler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
-
+	public static ArrayList<MovingEntity> npcs = new ArrayList<MovingEntity>();
+	
 	public static void update(int delta){
 		for(int i = 0; i < players.size(); i++){
 			players.get(i).update(delta);
+		}
+		for(int i = 0; i < npcs.size(); i++){
+			npcs.get(i).update(delta);
+			Network.sendNPCMovement(npcs.get(i).id);
 		}
 	}
 	
@@ -25,6 +31,16 @@ public class Handler {
 		for(int i = 0; i < players.size(); i++){
 			if(players.get(i).getConnectionID() == connectionID){
 				return players.get(i);
+			}
+		}
+		// if we can't find them sorry.
+		return null;
+	}
+	
+	public static MovingEntity getNPCByID(int id){
+		for(int i = 0; i < npcs.size(); i++){
+			if(npcs.get(i).id == id){
+				return npcs.get(i);
 			}
 		}
 		// if we can't find them sorry.

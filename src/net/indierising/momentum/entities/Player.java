@@ -10,14 +10,12 @@ public class Player extends MovingEntity{
 	boolean up,down,left,right;
 	private int connectionID;
 	private String username;
-	private String imageLocation;
-	
+
 	public Player(int connectionID,String username,float x,float y,int direction,String imageLocation){
 		// set our player up with the speed and a width and height of 32.
-		super(x,y,32,32,0.3f,direction);
+		super(connectionID,x,y,32,32,0.3f,direction,imageLocation);
 		this.setConnectionID(connectionID);
 		this.setUsername(username);
-		this.imageLocation = imageLocation;
 	}
 	
 	public void update(int delta){
@@ -73,14 +71,6 @@ public class Player extends MovingEntity{
 
 	public void setConnectionID(int connectionID) {
 		this.connectionID = connectionID;
-	}
-	
-	public String getImageLocation() {
-		return imageLocation;
-	}
-
-	public void setImageLocation(String imageLocation) {
-		this.imageLocation = imageLocation;
 	}
 
 	public String getUsername() {
