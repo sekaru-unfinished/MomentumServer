@@ -6,3 +6,9 @@
 <width>32
 <height>32
 <render>data/assets/images/Block.png
+<fixed>false
+<speed>0.3f
+<KEY_W>up
+<KEY_A>right
+<KEY_S>down
+<KEY_D>left
