@@ -60,6 +60,7 @@ public class Network {
 		public int direction;
 		public String username;
 		public float speed;
+		public String imageLocation;
 	}
 
 	public static void sendMovement(int connectionID) {
@@ -83,6 +84,7 @@ public class Network {
 		packet.direction = player.getDirection();
 		packet.username = player.getUsername();
 		packet.speed = player.getSpeed();
+		packet.imageLocation = player.getImageLocation();
 		server.sendToAllTCP(packet);
 	}
 }

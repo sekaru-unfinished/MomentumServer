@@ -33,7 +33,7 @@ public class Handler {
 
 	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
-		float x = 0, y = 0;
+		float x = 0, y = 0; String imageLocation = "";
 		File userData = new File("data/entities/players/" + packet.username + ".dat");
 		
 		if(!userData.exists()){
@@ -43,6 +43,7 @@ public class Handler {
 			bw.write("<name>" + packet.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
+			
 			bw.close();
 		}
 	
@@ -53,10 +54,11 @@ public class Handler {
 			reader.read();
 			x = Float.parseFloat(reader.findData("x"));
 			y = Float.parseFloat(reader.findData("y"));
+			imageLocation = reader.findData("render");
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
-		players.add(new Player(packet.connectionID,packet.username,x,y,Main.DIRECTION_DOWN));
+		players.add(new Player(packet.connectionID,packet.username,x,y,Main.DIRECTION_DOWN,imageLocation));
 	}
 	
 	public static void logout(int connectionID) throws IOException{
@@ -69,7 +71,8 @@ public class Handler {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("<name>" + player.getUsername() + "\n");
 			bw.write("<x>" + player.getX() + "\n");
-			bw.write("<y>" + player.getY());
+			bw.write("<y>" + player.getY() + "\n");
+			bw.write("<render>" + player.getImageLocation());
 			bw.close();
 		}
 		players.remove(player);
