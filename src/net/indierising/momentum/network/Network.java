@@ -50,7 +50,7 @@ public class Network {
 	
 	// inputs
 	public static class Key{
-		public String keyName;
+		public int key;
 		public boolean pressed;// whether the key was pressed or released.
 	}
 
@@ -59,19 +59,19 @@ public class Network {
 		public float x,y;
 		public int direction;
 		public String username;
+		public float speed;
 	}
 
 	public static void sendMovement(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
-		if(player != null){
-			packet.connectionID = player.getConnectionID();
-			packet.x = player.getX();
-			packet.y = player.getY();
-			packet.direction = player.getDirection();
-			packet.username = player.getUsername();
-			server.sendToAllUDP(packet);
-		}
+		packet.connectionID = player.getConnectionID();
+		packet.x = player.getX();
+		packet.y = player.getY();
+		packet.direction = player.getDirection();
+		packet.username = player.getUsername();
+		packet.speed = player.getSpeed();
+		server.sendToAllUDP(packet);
 	}
 
 	public static void sendPlayer(int connectionID) {
@@ -82,6 +82,7 @@ public class Network {
 		packet.y = player.getY();
 		packet.direction = player.getDirection();
 		packet.username = player.getUsername();
+		packet.speed = player.getSpeed();
 		server.sendToAllTCP(packet);
 	}
 }

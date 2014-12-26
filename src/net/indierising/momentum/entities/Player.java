@@ -1,6 +1,9 @@
 package net.indierising.momentum.entities;
 
 import net.indierising.momentum.network.Network;
+import net.indierising.momentum.network.Network.Key;
+
+import org.lwjgl.input.Keyboard;
 
 public class Player extends MovingEntity{
 	
@@ -18,16 +21,16 @@ public class Player extends MovingEntity{
 	public void update(int delta){
 		float dx = 0, dy = 0;
 		if(up){
-			dy-=speed;
+			dy-=getSpeed();
 		}
 		if(down){
-			dy+=speed;
+			dy+=getSpeed();
 		}
 		if(left){
-			dx-=speed;
+			dx-=getSpeed();
 		}
 		if(right){
-			dx+=speed;
+			dx+=getSpeed();
 		}
 		
 		
@@ -40,6 +43,20 @@ public class Player extends MovingEntity{
 				// send this to our players
 				Network.sendMovement(getConnectionID());
 			}
+		}
+	}
+	
+	public void setKeys(Key packet){
+		System.out.println(packet.key + " " + packet.pressed);
+		// sets the keys that were sent
+		if(packet.key == Keyboard.KEY_W){
+			up = packet.pressed;
+		}else if(packet.key == Keyboard.KEY_A){
+			left = packet.pressed;
+		}else if(packet.key == Keyboard.KEY_S){
+			down = packet.pressed;
+		}else if(packet.key == Keyboard.KEY_D){
+			right = packet.pressed;
 		}
 	}
 	

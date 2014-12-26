@@ -15,6 +15,12 @@ import net.indierising.momentum.utils.TagReader;
 public class Handler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
 
+	public static void update(int delta){
+		for(int i = 0; i < players.size(); i++){
+			players.get(i).update(delta);
+		}
+	}
+	
 	public static Player getPlayerByID(int connectionID){
 		for(int i = 0; i < players.size(); i++){
 			if(players.get(i).getConnectionID() == connectionID){
@@ -24,7 +30,8 @@ public class Handler {
 		// if we can't find them sorry.
 		return null;
 	}
-	
+
+	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
 		float x = 0, y = 0;
 		File userData = new File("data/entities/players/" + packet.username + ".dat");
@@ -45,10 +52,26 @@ public class Handler {
 			reader = new TagReader(new FileInputStream(userData));
 			reader.read();
 			x = Float.parseFloat(reader.findData("x"));
-			x = Float.parseFloat(reader.findData("y"));
+			y = Float.parseFloat(reader.findData("y"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
 		players.add(new Player(packet.connectionID,packet.username,x,y,Main.DIRECTION_DOWN));
+	}
+	
+	public static void logout(int connectionID) throws IOException{
+		Player player = getPlayerByID(connectionID);
+		File userData = new File("data/entities/players/" + player.getUsername() + ".dat");
+				
+		if(userData.exists()){
+			userData.createNewFile();
+			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write("<name>" + player.getUsername() + "\n");
+			bw.write("<x>" + player.getX() + "\n");
+			bw.write("<y>" + player.getY());
+			bw.close();
+		}
+		players.remove(player);
 	}
 }
