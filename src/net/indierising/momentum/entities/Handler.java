@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import net.indierising.momentum.Main;
 import net.indierising.momentum.network.Network;
-import net.indierising.momentum.network.Network.PlayerPacket;
+import net.indierising.momentum.network.Packets.PlayerPacket;
 import net.indierising.momentum.utils.TagReader;
 
 import org.newdawn.slick.geom.Vector2f;

@@ -6,8 +6,8 @@ import java.io.IOException;
 import net.indierising.momentum.Main;
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.entities.MovingEntity;
-import net.indierising.momentum.network.Network.Key;
-import net.indierising.momentum.network.Network.PlayerPacket;
+import net.indierising.momentum.network.Packets.Key;
+import net.indierising.momentum.network.Packets.PlayerPacket;
 
 import org.newdawn.slick.geom.Vector2f;
 

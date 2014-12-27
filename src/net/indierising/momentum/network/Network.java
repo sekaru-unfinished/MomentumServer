@@ -7,6 +7,9 @@ import net.indierising.momentum.entities.Entity;
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.entities.Player;
+import net.indierising.momentum.network.Packets.EntityPacket;
+import net.indierising.momentum.network.Packets.Key;
+import net.indierising.momentum.network.Packets.PlayerPacket;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
@@ -51,28 +54,6 @@ public class Network {
 		kryo.register(EntityPacket.class);
 	}
 	
-	// inputs
-	public static class Key{
-		public int key;
-		public boolean pressed;// whether the key was pressed or released.
-	}
-
-	public static class PlayerPacket{
-		public int connectionID;
-		public float x,y;
-		public int direction;
-		public String username;
-		public float speed;
-		public String imageLocation;
-	}
-	
-	public static class EntityPacket{
-		public float x,y,speed;
-		public int direction;
-		public String imageLocation;
-		public int id;
-	}
-
 	public static void sendMovement(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
@@ -85,7 +66,7 @@ public class Network {
 		server.sendToAllUDP(packet);
 	}
 	
-	public static void sendNPCMovement(int id){
+	public static void sendNPCMovement(int id) {
 		MovingEntity entity = Handler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();
@@ -97,7 +78,7 @@ public class Network {
 		server.sendToAllUDP(packet);
 	}
 	
-	public static void sendNPC(int id){
+	public static void sendNPC(int id) {
 		MovingEntity entity = Handler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();

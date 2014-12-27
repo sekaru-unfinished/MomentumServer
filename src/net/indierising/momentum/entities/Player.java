@@ -1,7 +1,7 @@
 package net.indierising.momentum.entities;
 
 import net.indierising.momentum.network.Network;
-import net.indierising.momentum.network.Network.Key;
+import net.indierising.momentum.network.Packets.Key;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Vector2f;
