@@ -9,6 +9,8 @@ import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.network.Network.Key;
 import net.indierising.momentum.network.Network.PlayerPacket;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
@@ -29,7 +31,7 @@ public class Reciever extends Listener{
 				e.printStackTrace();
 			}
 			Network.sendPlayer(connection.getID());
-			Handler.npcs.add(new MovingEntity(2,500,32,32,32,0.4f,Main.DIRECTION_DOWN,"data/assets/images/Block.png"));
+			Handler.npcs.add(new MovingEntity(2, new Vector2f(500, 32), 32, 32, 0.4f, Main.DIRECTION_DOWN, "data/assets/images/Block.png"));
 			Network.sendNPC(2);
 		}
 		

@@ -1,6 +1,6 @@
 package net.indierising.momentum.entities;
 
-import net.indierising.momentum.network.Network;
+import org.newdawn.slick.geom.Vector2f;
 
 public class MovingEntity extends Entity{
 	int id;
@@ -8,8 +8,8 @@ public class MovingEntity extends Entity{
 	int direction;
 	private String imageLocation;
 	
-	public MovingEntity(int id,float x,float y,int width,int height,float speed,int direction,String imageLocation){
-		super(x,y,width,height);
+	public MovingEntity(int id, Vector2f pos, float width, float height, float speed, int direction, String imageLocation){
+		super(pos, width, height);
 		this.id = id;
 		this.setSpeed(speed);
 		this.direction = direction;
