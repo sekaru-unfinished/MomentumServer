@@ -17,7 +17,7 @@ public class Packets {
 	}
 	
 	public static class EntityPacket {
-		public float x,y,speed;
+		public float x, y, speed;
 		public int direction;
 		public String imageLocation;
 		public int id;
