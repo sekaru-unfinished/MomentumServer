@@ -46,6 +46,7 @@ public class Network {
 		kryo.register(Key.class);
 		kryo.register(ArrayList.class);
 		
+
 		kryo.register(PlayerPacket.class);
 		kryo.register(EntityPacket.class);
 	}
