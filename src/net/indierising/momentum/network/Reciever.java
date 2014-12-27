@@ -3,7 +3,9 @@ package net.indierising.momentum.network;
 
 import java.io.IOException;
 
+import net.indierising.momentum.Main;
 import net.indierising.momentum.entities.Handler;
+import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.network.Network.Key;
 import net.indierising.momentum.network.Network.PlayerPacket;
 
@@ -27,6 +29,8 @@ public class Reciever extends Listener{
 				e.printStackTrace();
 			}
 			Network.sendPlayer(connection.getID());
+			Handler.npcs.add(new MovingEntity(2,500,32,32,32,0.4f,Main.DIRECTION_DOWN,"data/assets/images/Block.png"));
+			Network.sendNPC(2);
 		}
 		
 		// TODO handle key presses in whatever entity system we use

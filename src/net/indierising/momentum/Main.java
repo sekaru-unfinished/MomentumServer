@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.entities.Handler;
+import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.network.Network;
 import net.indierising.momentum.utils.TagReader;
 
@@ -20,7 +21,7 @@ public class Main extends BasicGame{
 	public static final int DIRECTION_DOWN = 1, DIRECTION_UP = 2, DIRECTION_LEFT = 3,DIRECTION_RIGHT = 4;
 	
 	public Main() {
-		super("Momentum Client");
+		super("Momentum Server");
 	}
 
 	static ArrayList<String> log = new ArrayList<String>();
