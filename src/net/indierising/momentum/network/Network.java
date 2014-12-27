@@ -3,7 +3,6 @@ package net.indierising.momentum.network;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.indierising.momentum.entities.Entity;
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.entities.Player;
