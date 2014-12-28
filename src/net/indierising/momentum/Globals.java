@@ -6,11 +6,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.util.ArrayList;
 
+import net.indierising.momentum.network.Network;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
 public class Globals {
+	public static Network network;
+	
 	public static String DATA_PACKAGE_NAME = "ServerData.zip";
 	public static String DATA_URL = "http://www.indierising.net/momentum/" + DATA_PACKAGE_NAME;
 	public static String DATA_DIR = "data/" + DATA_PACKAGE_NAME;
@@ -38,5 +42,12 @@ public class Globals {
 	   File file = new File(fileName);
 	   file.delete();
     }
+	
+	public static ArrayList<String> log = new ArrayList<String>();
+	public static void log(String message){
+		log.add(message);
+		// TODO save the log when exiting
+		System.out.println(message);
+	}
 }
 

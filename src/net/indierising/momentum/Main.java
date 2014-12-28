@@ -3,7 +3,6 @@ package net.indierising.momentum;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import net.indierising.momentum.entities.Handler;
 import net.indierising.momentum.network.Network;
@@ -16,33 +15,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Main extends BasicGame{
-	
 	public static final int DIRECTION_DOWN = 1, DIRECTION_UP = 2, DIRECTION_LEFT = 3,DIRECTION_RIGHT = 4;
 	
 	public Main() {
 		super("Momentum Server");
 	}
-
-	static ArrayList<String> log = new ArrayList<String>();
-	
-	static AppGameContainer app;
-	
-	public static void main(String args[]) throws SlickException{
-		app = new AppGameContainer(new Main());
-	    app.setShowFPS(false);
-	    app.setTargetFrameRate(60);
-	    app.setMaximumLogicUpdateInterval(10);
-		app.setMaximumLogicUpdateInterval(60);
-	    app.start();
-	}
-	
-	public static void log(String message){
-		log.add(message);
-		// TODO save the log when exiting
-		System.out.println(message);
-	}
-	
-	public void render(GameContainer arg0, Graphics arg1) throws SlickException {	}
 
 	public void init(GameContainer gc) throws SlickException {
 		// TODO error log in data folder	
@@ -63,16 +40,28 @@ public class Main extends BasicGame{
 					
 		// load ip address from config and add our parsed port numbers
 		try {
-			Network network = new Network(config.findData("ip"),tcp_port,udp_port);
+			Globals.network = new Network(config.findData("ip"),tcp_port,udp_port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		// let us know where the server has started
-		log("Server started on: " + Network.IP + " TCP: " + Network.TCP_PORT + " UDP: " + Network.UDP_PORT); 	
+		Globals.log("Server started on: " + Globals.network.IP + " TCP: " + Globals.network.TCP_PORT + " UDP: " + Globals.network.UDP_PORT); 	
 	}
+	
+	public void render(GameContainer gc, Graphics g) throws SlickException {	}
 
 	public void update(GameContainer gc, int delta) throws SlickException {
 		Handler.update(delta);
+	}
+	
+	public static AppGameContainer app;
+	public static void main(String args[]) throws SlickException{
+		app = new AppGameContainer(new Main());
+	    app.setShowFPS(false);
+	    app.setTargetFrameRate(60);
+	    app.setMaximumLogicUpdateInterval(10);
+		app.setMaximumLogicUpdateInterval(60);
+	    app.start();
 	}
 }
