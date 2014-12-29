@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.ArrayList;
 
@@ -61,7 +62,7 @@ public class TagReader {
 		return line;
 	}
 	
-	public void addTag(String tag, String data) throws IOException {
+	public void addData(String tag, String data) throws IOException {
 		FileWriter fw = new FileWriter(file.getAbsolutePath());
 		BufferedWriter bw = new BufferedWriter(fw);
 		
@@ -73,8 +74,27 @@ public class TagReader {
 		lines.add(tagAndData);
 	}
 	
-	public void setTag(String tag, String newData) {
+	public void setData(String tag, String newData) throws IOException {
+		for(int i=0; i<lines.size(); i++) {
+			if(lines.get(i).contains(tag)) {
+				String oldData = lines.get(i).replace("<" + tag + ">", "");
+				lines.set(i, lines.get(i).replace(oldData, newData));
+			}
+		}
 		
+		// clear the file
+		PrintWriter writer = new PrintWriter(file);
+		writer.print("");
+		writer.close();
+		
+		// write all the lines
+		FileWriter fw = new FileWriter(file.getAbsolutePath());
+		BufferedWriter bw = new BufferedWriter(fw);
+		
+		for(int i=0; i<lines.size(); i++) {
+			bw.write(lines.get(i));
+			bw.close();
+		}
 	}
 }
 
