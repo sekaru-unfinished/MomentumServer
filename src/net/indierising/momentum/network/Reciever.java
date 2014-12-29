@@ -31,7 +31,7 @@ public class Reciever extends Listener{
 				e.printStackTrace();
 			}
 			Network.sendPlayer(connection.getID());
-			Handler.npcs.add(new MovingEntity(2, new Vector2f(500, 32), 32, 32, 0.4f, Main.DIRECTION_DOWN, "data/assets/images/Block.png"));
+			Handler.npcs.add(new MovingEntity(2, new Vector2f(500, 32), 32, 32, 0.4f, Main.DIR_DOWN, "data/assets/images/Block.png"));
 			Network.sendNPC(2);
 		}
 		

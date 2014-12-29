@@ -1,10 +1,11 @@
 package net.indierising.momentum;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.indierising.momentum.entities.Handler;
+import net.indierising.momentum.maps.Maps;
 import net.indierising.momentum.network.Network;
 import net.indierising.momentum.utils.TagReader;
 
@@ -15,22 +16,31 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 public class Main extends BasicGame{
-	public static final int DIRECTION_DOWN = 1, DIRECTION_UP = 2, DIRECTION_LEFT = 3,DIRECTION_RIGHT = 4;
+	public static final int DIR_DOWN = 0, DIR_UP = 1, DIR_LEFT = 2, DIR_RIGHT = 3;
 	
 	public Main() {
 		super("Momentum Server");
 	}
 
 	public void init(GameContainer gc) throws SlickException {
+		// download data
+		try {
+			Globals.downloadData();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// init maps
+		Maps.initMaps();
+		
 		// TODO error log in data folder	
 		TagReader config = null;
 		try {
-			config = new TagReader(new FileInputStream("data/config.txt"));
+			config = new TagReader(new File("data/config.txt"));
 			config.read();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();// error loading the config.
+			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -40,7 +50,7 @@ public class Main extends BasicGame{
 					
 		// load ip address from config and add our parsed port numbers
 		try {
-			Globals.network = new Network(config.findData("ip"),tcp_port,udp_port);
+			Globals.network = new Network(config.findData("ip"), tcp_port, udp_port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

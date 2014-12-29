@@ -16,12 +16,12 @@ import com.esotericsoftware.kryonet.Server;
 
 public class Network {
 	public String IP = "localhost";
-	public int TCP_PORT = 9000, UDP_PORT = 9001;
+	public final int TCP_PORT, UDP_PORT;
 	
 	public static Server server;
 	
 	// set your own ports, will be an option in a config file
-	public Network(String IP, int TCP_PORT, int UDP_PORT) throws IOException{
+	public Network(String IP, int TCP_PORT, int UDP_PORT) throws IOException {
 		server = new Server();
 		
 		// register all classes that need to be sent - must be the same on client and server
@@ -40,14 +40,12 @@ public class Network {
 		server.addListener(new Reciever());
 	}
 	
-	public static void register (EndPoint endPoint) {
+	public static void register(EndPoint endPoint) {
 		Kryo kryo = endPoint.getKryo();
-		
 
 		// register the classes we'll be transferring
 		kryo.register(Key.class);
 		kryo.register(ArrayList.class);
-		
 
 		kryo.register(PlayerPacket.class);
 		kryo.register(EntityPacket.class);

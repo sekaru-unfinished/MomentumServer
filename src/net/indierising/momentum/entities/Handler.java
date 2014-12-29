@@ -68,7 +68,7 @@ public class Handler {
 		// load our information about the user here.
 		TagReader reader;
 		try {
-			reader = new TagReader(new FileInputStream(userData));
+			reader = new TagReader(userData);
 			reader.read();
 			x = Float.parseFloat(reader.findData("x"));
 			y = Float.parseFloat(reader.findData("y"));
@@ -76,7 +76,7 @@ public class Handler {
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
-		players.add(new Player(packet.connectionID, packet.username, new Vector2f(x, y), Main.DIRECTION_DOWN, imageLocation));
+		players.add(new Player(packet.connectionID, packet.username, new Vector2f(x, y), Main.DIR_DOWN, imageLocation));
 	}
 	
 	public static void logout(int connectionID) throws IOException{

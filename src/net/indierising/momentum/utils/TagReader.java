@@ -1,19 +1,28 @@
 package net.indierising.momentum.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 
 public class TagReader {
-	InputStream file; Reader reader; BufferedReader in;
+	File file; Reader reader; BufferedReader in;
 	public ArrayList<String> lines = new ArrayList<String>();
 	
-	public TagReader(InputStream file) {
+	public TagReader(File file) {
 		this.file = file;
-		reader = new InputStreamReader(file);
+		
+		try {
+			reader = new InputStreamReader(new FileInputStream(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
         in = new BufferedReader(reader);
 	}
 	
@@ -50,6 +59,22 @@ public class TagReader {
 			line = line.replace(">","");
 		}
 		return line;
+	}
+	
+	public void addTag(String tag, String data) throws IOException {
+		FileWriter fw = new FileWriter(file.getAbsolutePath());
+		BufferedWriter bw = new BufferedWriter(fw);
+		
+		String tagAndData = "<" + tag + ">" + data;
+		bw.write(tagAndData);
+		bw.close();
+		
+		// add it to our list of lines
+		lines.add(tagAndData);
+	}
+	
+	public void setTag(String tag, String newData) {
+		
 	}
 }
 
