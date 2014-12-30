@@ -23,13 +23,6 @@ public class Main extends BasicGame{
 	}
 
 	public void init(GameContainer gc) throws SlickException {
-		// download data
-		try {
-			Globals.downloadData();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		// init maps
 		Maps.initMaps();
 		

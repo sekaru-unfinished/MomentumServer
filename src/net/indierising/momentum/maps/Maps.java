@@ -1,7 +1,8 @@
 package net.indierising.momentum.maps;
 
-import java.io.File;
 import java.util.ArrayList;
+
+import net.indierising.momentum.Constants;
 
 import org.newdawn.slick.SlickException;
 
@@ -9,12 +10,9 @@ public class Maps {
 	public static ArrayList<MapData> maps = new ArrayList<MapData>();
 	
 	public static void initMaps() throws SlickException {
-		// get the file count
-		int mapCount = new File("data").list().length;
-		
 		// add them to the list of our maps
-		for(int i=0; i<mapCount; i++) {
-			maps.add(new MapData("data/map" + (i+1)));
+		for(int i=0; i<Constants.MAX_MAPS; i++) {
+			maps.add(new MapData("data/maps/map" + (i+1)));
 		}
 	}
 }
