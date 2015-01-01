@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import net.indierising.momentum.network.Network;
 
 public class Globals {
+	public static int TILE_SIZE = 32;
+	
 	public static Network network;
 	
 	public static ArrayList<String> log = new ArrayList<String>();
