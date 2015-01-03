@@ -6,7 +6,7 @@ import net.indierising.momentum.network.Packets.Key;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Player extends MovingEntity{
+public class Player extends Entity {
 	
 	boolean up,down,left,right;
 	private int connectionID;

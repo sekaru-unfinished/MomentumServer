@@ -23,8 +23,8 @@ public class MapData {
 		
 		// get some useful info about the map
 		name = reader.findData("map", "A Map");
-		attributesLayer = Integer.valueOf(reader.findData("attributes"));
-		mapType = Integer.valueOf(reader.findData("type"));
+		attributesLayer = Integer.valueOf(reader.findData("attributes", "0"));
+		mapType = Integer.valueOf(reader.findData("type", "0"));
 		
 		// search for NPCs
 		for(int i=0; i<Maps.MAX_MAP_NPCS; i++) {
@@ -40,6 +40,7 @@ public class MapData {
 	private void loadMap() {
 		int tileID; String value;
 		
+		blockedRect = new Rectangle[map.getWidth()][map.getHeight()];
 		for(int x=0; x<map.getWidth(); x++) {
 			for(int y=0; y<map.getHeight(); y++) {
 				// get the tile ID

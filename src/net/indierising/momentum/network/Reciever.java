@@ -1,11 +1,10 @@
 package net.indierising.momentum.network;
 
-
 import java.io.IOException;
 
 import net.indierising.momentum.Main;
+import net.indierising.momentum.entities.Entity;
 import net.indierising.momentum.entities.Handler;
-import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.network.Packets.Key;
 import net.indierising.momentum.network.Packets.PlayerPacket;
 
@@ -13,7 +12,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-
 
 public class Reciever extends Listener{
 	public void connected (Connection connection) {
@@ -31,7 +29,7 @@ public class Reciever extends Listener{
 				e.printStackTrace();
 			}
 			Network.sendPlayer(connection.getID());
-			Handler.npcs.add(new MovingEntity(2, new Vector2f(500, 32), 32, 32, 0.4f, Main.DIR_DOWN, "data/assets/images/Block.png"));
+			Handler.npcs.add(new Entity(2, new Vector2f(500, 32), 32, 32, 0.4f, Main.DIR_DOWN, "data/assets/images/Block.png"));
 			Network.sendNPC(2);
 		}
 		

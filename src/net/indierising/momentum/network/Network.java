@@ -3,8 +3,8 @@ package net.indierising.momentum.network;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.indierising.momentum.entities.Entity;
 import net.indierising.momentum.entities.Handler;
-import net.indierising.momentum.entities.MovingEntity;
 import net.indierising.momentum.entities.Player;
 import net.indierising.momentum.network.Packets.EntityPacket;
 import net.indierising.momentum.network.Packets.Key;
@@ -57,32 +57,32 @@ public class Network {
 		packet.connectionID = player.getConnectionID();
 		packet.x = player.getX();
 		packet.y = player.getY();
-		packet.direction = player.getDirection();
+		packet.direction = player.getDir();
 		packet.username = player.getUsername();
 		packet.speed = player.getSpeed();
 		server.sendToAllUDP(packet);
 	}
 	
 	public static void sendNPCMovement(int id) {
-		MovingEntity entity = Handler.getNPCByID(id);
+		Entity entity = Handler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
-		packet.direction = entity.getDirection();
+		packet.direction = entity.getDir();
 		packet.speed = entity.getSpeed();
-		packet.imageLocation = entity.getImageLocation();
+		packet.imageLocation = entity.getImageLoc();
 		packet.id = id;
 		server.sendToAllUDP(packet);
 	}
 	
 	public static void sendNPC(int id) {
-		MovingEntity entity = Handler.getNPCByID(id);
+		Entity entity = Handler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
-		packet.direction = entity.getDirection();
+		packet.direction = entity.getDir();
 		packet.speed = entity.getSpeed();
-		packet.imageLocation = entity.getImageLocation();
+		packet.imageLocation = entity.getImageLoc();
 		packet.id = id;
 		server.sendToAllTCP(packet);
 	}
@@ -93,10 +93,10 @@ public class Network {
 		packet.connectionID = connectionID;
 		packet.x = player.getX();
 		packet.y = player.getY();
-		packet.direction = player.getDirection();
+		packet.direction = player.getDir();
 		packet.username = player.getUsername();
 		packet.speed = player.getSpeed();
-		packet.imageLocation = player.getImageLocation();
+		packet.imageLocation = player.getImageLoc();
 		server.sendToAllTCP(packet);
 	}
 }

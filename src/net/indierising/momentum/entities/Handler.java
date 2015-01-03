@@ -16,7 +16,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Handler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
-	public static ArrayList<MovingEntity> npcs = new ArrayList<MovingEntity>();
+	public static ArrayList<Entity> npcs = new ArrayList<Entity>();
 	
 	public static void update(int delta){
 		for(int i = 0; i < players.size(); i++){
@@ -38,7 +38,7 @@ public class Handler {
 		return null;
 	}
 	
-	public static MovingEntity getNPCByID(int id){
+	public static Entity getNPCByID(int id){
 		for(int i = 0; i < npcs.size(); i++){
 			if(npcs.get(i).id == id){
 				return npcs.get(i);
@@ -89,7 +89,7 @@ public class Handler {
 			bw.write("<name>" + player.getUsername() + "\n");
 			bw.write("<x>" + player.getX() + "\n");
 			bw.write("<y>" + player.getY() + "\n");
-			bw.write("<render>" + player.getImageLocation());
+			bw.write("<render>" + player.getImageLoc());
 			bw.close();
 		}
 		players.remove(player);
