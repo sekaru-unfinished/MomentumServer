@@ -19,8 +19,8 @@ public class Reciever extends Listener{
 	}
 	
 	public void received (Connection connection, final Object object) {
-		// handles players when they join.
-		if(object instanceof PlayerPacket){
+		// handles players when they join
+		if(object instanceof PlayerPacket) {
 			PlayerPacket packet = (PlayerPacket) object;
 			// start all players at location 32 x 32
 			try {
@@ -41,7 +41,7 @@ public class Reciever extends Listener{
 		}
 	}
 	
-	public void disconnected (Connection connection){
+	public void disconnected(Connection connection){
 		try {
 			Handler.logout(connection.getID());
 		} catch (IOException e) {

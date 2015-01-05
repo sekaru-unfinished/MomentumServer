@@ -9,6 +9,8 @@ public class PlayerData {
 	public int dir;
 	public String imageLoc;
 	
+	public PlayerData() {}
+	
 	public PlayerData(Player player) {
 		this.connectionID = player.getConnectionID();
 		this.username = player.getUsername();
@@ -16,5 +18,9 @@ public class PlayerData {
 		this.y = player.getY();
 		this.dir = player.getDir();
 		this.imageLoc = player.getImageLoc();
+	}
+	
+	public String toString() {
+		return "ID: " + connectionID + ", User: " + username + ", pos: " + x + ", " + y;
 	}
 }

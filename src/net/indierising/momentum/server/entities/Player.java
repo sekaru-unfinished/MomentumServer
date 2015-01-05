@@ -9,15 +9,14 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends Entity {
-	
-	boolean up,down,left,right;
+	boolean up, down, left, right;
 	private int connectionID;
 	private String username;
 
 	public Player(PlayerData data) {
 		super(data.connectionID, new Vector2f(data.x, data.y), Globals.TILE_SIZE, Globals.TILE_SIZE, 0.3f, data.dir, data.imageLoc);
-		this.setConnectionID(connectionID);
-		this.setUsername(username);
+		this.setConnectionID(data.connectionID);
+		this.setUsername(data.username);
 	}
 
 	public void update(int delta){
@@ -34,7 +33,6 @@ public class Player extends Entity {
 		if(right){
 			dx+=getSpeed();
 		}
-		
 		
 		float nx = getX()+dx;
 		float ny = getY()+dy;

@@ -7,12 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.indierising.momentum.server.Main;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 import net.indierising.momentum.server.utils.TagReader;
-
-import org.newdawn.slick.geom.Vector2f;
 
 public class Handler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
@@ -29,12 +26,12 @@ public class Handler {
 	}
 	
 	public static Player getPlayerByID(int connectionID){
-		for(int i = 0; i < players.size(); i++){
+		for(int i = 0; i < players.size(); i++) {
 			if(players.get(i).getConnectionID() == connectionID){
 				return players.get(i);
 			}
 		}
-		// if we can't find them sorry.
+		// if we can't find them sorry
 		return null;
 	}
 	
@@ -44,13 +41,13 @@ public class Handler {
 				return npcs.get(i);
 			}
 		}
-		// if we can't find them sorry.
+		// if we can't find them sorry
 		return null;
 	}
 
 	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
-		float x = 0, y = 0; String imageLocation = "";
+		float x = 0, y = 0;
 		File userData = new File("data/entities/players/" + packet.data.username + ".dat");
 		
 		if(!userData.exists()){
@@ -71,18 +68,20 @@ public class Handler {
 			reader.read();
 			x = Float.parseFloat(reader.findData("x"));
 			y = Float.parseFloat(reader.findData("y"));
-			imageLocation = reader.findData("render");
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
+		
 		players.add(new Player(packet.data));
 	}
 	
 	public static void logout(int connectionID) throws IOException{
 		Player player = getPlayerByID(connectionID);
+		if(player==null) return;
+		
 		File userData = new File("data/entities/players/" + player.getUsername() + ".dat");
 				
-		if(userData.exists()){
+		if(userData.exists()) {
 			userData.createNewFile();
 			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);

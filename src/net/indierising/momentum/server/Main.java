@@ -49,10 +49,10 @@ public class Main extends BasicGame{
 		}
 		
 		// let us know where the server has started
-		Globals.log("Server started on: " + Globals.network.IP + " TCP: " + Globals.network.TCP_PORT + " UDP: " + Globals.network.UDP_PORT); 	
+		Globals.log("Server started on: " + Globals.network.ip + " TCP: " + Globals.network.tcpPort + " UDP: " + Globals.network.udpPort); 	
 	}
 	
-	public void render(GameContainer gc, Graphics g) throws SlickException {	}
+	public void render(GameContainer gc, Graphics g) throws SlickException {}
 
 	public void update(GameContainer gc, int delta) throws SlickException {
 		Handler.update(delta);
