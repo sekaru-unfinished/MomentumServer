@@ -1,9 +1,9 @@
-package net.indierising.momentum.maps;
+package net.indierising.momentum.server.maps;
 
 import java.io.File;
 
-import net.indierising.momentum.Globals;
-import net.indierising.momentum.utils.TagReader;
+import net.indierising.momentum.server.Globals;
+import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;

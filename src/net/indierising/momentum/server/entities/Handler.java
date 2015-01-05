@@ -1,4 +1,4 @@
-package net.indierising.momentum.entities;
+package net.indierising.momentum.server.entities;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,10 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.indierising.momentum.Main;
-import net.indierising.momentum.network.Network;
-import net.indierising.momentum.network.Packets.PlayerPacket;
-import net.indierising.momentum.utils.TagReader;
+import net.indierising.momentum.server.Main;
+import net.indierising.momentum.server.network.Network;
+import net.indierising.momentum.server.network.Packets.PlayerPacket;
+import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.geom.Vector2f;
 
@@ -51,13 +51,13 @@ public class Handler {
 	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
 		float x = 0, y = 0; String imageLocation = "";
-		File userData = new File("data/entities/players/" + packet.username + ".dat");
+		File userData = new File("data/entities/players/" + packet.data.username + ".dat");
 		
 		if(!userData.exists()){
 			userData.createNewFile();
 			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write("<name>" + packet.username + "\n");
+			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
 			
@@ -75,7 +75,7 @@ public class Handler {
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
-		players.add(new Player(packet.connectionID, packet.username, new Vector2f(x, y), Main.DIR_DOWN, imageLocation));
+		players.add(new Player(packet.data));
 	}
 	
 	public static void logout(int connectionID) throws IOException{

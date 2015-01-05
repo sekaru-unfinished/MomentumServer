@@ -1,14 +1,14 @@
-package net.indierising.momentum.network;
+package net.indierising.momentum.server.network;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.indierising.momentum.entities.Entity;
-import net.indierising.momentum.entities.Handler;
-import net.indierising.momentum.entities.Player;
-import net.indierising.momentum.network.Packets.EntityPacket;
-import net.indierising.momentum.network.Packets.Key;
-import net.indierising.momentum.network.Packets.PlayerPacket;
+import net.indierising.momentum.server.entities.Entity;
+import net.indierising.momentum.server.entities.Handler;
+import net.indierising.momentum.server.entities.Player;
+import net.indierising.momentum.server.network.Packets.EntityPacket;
+import net.indierising.momentum.server.network.Packets.Key;
+import net.indierising.momentum.server.network.Packets.PlayerPacket;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
@@ -51,15 +51,11 @@ public class Network {
 		kryo.register(EntityPacket.class);
 	}
 	
+	// todo have a separate movement packet?
 	public static void sendMovement(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
-		packet.connectionID = player.getConnectionID();
-		packet.x = player.getX();
-		packet.y = player.getY();
-		packet.direction = player.getDir();
-		packet.username = player.getUsername();
-		packet.speed = player.getSpeed();
+		packet.data = player.toPlayerData();
 		server.sendToAllUDP(packet);
 	}
 	
@@ -90,13 +86,7 @@ public class Network {
 	public static void sendPlayer(int connectionID) {
 		Player player = Handler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
-		packet.connectionID = connectionID;
-		packet.x = player.getX();
-		packet.y = player.getY();
-		packet.direction = player.getDir();
-		packet.username = player.getUsername();
-		packet.speed = player.getSpeed();
-		packet.imageLocation = player.getImageLoc();
+		packet.data = player.toPlayerData();
 		server.sendToAllTCP(packet);
 	}
 }

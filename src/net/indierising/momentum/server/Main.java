@@ -1,13 +1,13 @@
-package net.indierising.momentum;
+package net.indierising.momentum.server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.indierising.momentum.entities.Handler;
-import net.indierising.momentum.maps.Maps;
-import net.indierising.momentum.network.Network;
-import net.indierising.momentum.utils.TagReader;
+import net.indierising.momentum.server.entities.Handler;
+import net.indierising.momentum.server.maps.Maps;
+import net.indierising.momentum.server.network.Network;
+import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;

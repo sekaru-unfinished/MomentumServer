@@ -1,4 +1,4 @@
-package net.indierising.momentum.maps;
+package net.indierising.momentum.server.maps;
 
 import java.util.ArrayList;
 

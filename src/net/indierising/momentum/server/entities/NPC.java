@@ -1,4 +1,4 @@
-package net.indierising.momentum.entities;
+package net.indierising.momentum.server.entities;
 
 import org.newdawn.slick.geom.Vector2f;
 

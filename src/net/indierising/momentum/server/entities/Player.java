@@ -1,7 +1,9 @@
-package net.indierising.momentum.entities;
+package net.indierising.momentum.server.entities;
 
-import net.indierising.momentum.network.Network;
-import net.indierising.momentum.network.Packets.Key;
+import net.indierising.momentum.server.Globals;
+import net.indierising.momentum.server.entitydata.PlayerData;
+import net.indierising.momentum.server.network.Network;
+import net.indierising.momentum.server.network.Packets.Key;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Vector2f;
@@ -12,13 +14,12 @@ public class Player extends Entity {
 	private int connectionID;
 	private String username;
 
-	public Player(int connectionID, String username, Vector2f pos, int direction, String imageLocation){
-		// set our player up with the speed and a width and height of 32.
-		super(connectionID, pos, 32, 32, 0.3f, direction, imageLocation);
+	public Player(PlayerData data) {
+		super(data.connectionID, new Vector2f(data.x, data.y), Globals.TILE_SIZE, Globals.TILE_SIZE, 0.3f, data.dir, data.imageLoc);
 		this.setConnectionID(connectionID);
 		this.setUsername(username);
 	}
-	
+
 	public void update(int delta){
 		float dx = 0, dy = 0;
 		if(up){
@@ -80,5 +81,10 @@ public class Player extends Entity {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	// convert to a sendable object
+	public PlayerData toPlayerData() {
+		return new PlayerData(this);
 	}
 }

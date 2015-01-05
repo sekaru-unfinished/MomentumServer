@@ -1,8 +1,8 @@
-package net.indierising.momentum;
+package net.indierising.momentum.server;
 
 import java.util.ArrayList;
 
-import net.indierising.momentum.network.Network;
+import net.indierising.momentum.server.network.Network;
 
 public class Globals {
 	public static int TILE_SIZE = 32;
