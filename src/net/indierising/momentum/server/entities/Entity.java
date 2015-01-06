@@ -3,8 +3,8 @@ package net.indierising.momentum.server.entities;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
-	private Vector2f pos;
 	float width, height;
+	private Vector2f pos;
 	int dir;
 	int id;
 	private float speed;
@@ -43,7 +43,7 @@ public class Entity {
 	public void setY(float y) {
 		pos.set(pos.getX(), y);
 	}
-
+	
 	public int getDir() {
 		return dir;
 	}

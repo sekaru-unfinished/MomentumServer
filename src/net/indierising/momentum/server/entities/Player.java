@@ -47,7 +47,6 @@ public class Player extends Entity {
 	}
 	
 	public void setKeys(Key packet){
-		System.out.println(packet.key + " " + packet.pressed);
 		// sets the keys that were sent
 		if(packet.key == Keyboard.KEY_W){
 			up = packet.pressed;
