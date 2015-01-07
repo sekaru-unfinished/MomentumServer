@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import net.indierising.momentum.server.entities.Handler;
+import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.utils.TagReader;
@@ -55,7 +55,7 @@ public class Main extends BasicGame{
 	public void render(GameContainer gc, Graphics g) throws SlickException {}
 
 	public void update(GameContainer gc, int delta) throws SlickException {
-		Handler.update(delta);
+		EntityHandler.update(delta);
 	}
 	
 	public static AppGameContainer app;

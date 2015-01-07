@@ -11,7 +11,7 @@ import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 import net.indierising.momentum.server.utils.TagReader;
 
-public class Handler {
+public class EntityHandler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
 	public static ArrayList<Entity> npcs = new ArrayList<Entity>();
 	

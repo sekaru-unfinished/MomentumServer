@@ -4,15 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.server.entities.Entity;
-import net.indierising.momentum.server.entities.Handler;
+import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.entities.Player;
 import net.indierising.momentum.server.entitydata.PlayerData;
+import net.indierising.momentum.server.maps.Maps;
+import net.indierising.momentum.server.network.Packets.ConstantsPacket;
 import net.indierising.momentum.server.network.Packets.EntityPacket;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerMove;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.EndPoint;
 import com.esotericsoftware.kryonet.Server;
 
@@ -46,6 +49,7 @@ public class Network {
 		Kryo kryo = endPoint.getKryo();
 
 		// register the classes we'll be transferring
+		kryo.register(ConstantsPacket.class);
 		kryo.register(Key.class);
 		kryo.register(ArrayList.class);
 
@@ -56,7 +60,7 @@ public class Network {
 	}
 	
 	public static void sendMovement(int connectionID) {
-		Player player = Handler.getPlayerByID(connectionID);
+		Player player = EntityHandler.getPlayerByID(connectionID);
 		PlayerMove packet = new PlayerMove();
 		packet.connectionID = player.getConnectionID();
 		packet.x = player.getX();
@@ -66,7 +70,7 @@ public class Network {
 	}
 	
 	public static void sendNPCMovement(int id) {
-		Entity entity = Handler.getNPCByID(id);
+		Entity entity = EntityHandler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
@@ -78,7 +82,7 @@ public class Network {
 	}
 	
 	public static void sendNPC(int id) {
-		Entity entity = Handler.getNPCByID(id);
+		Entity entity = EntityHandler.getNPCByID(id);
 		EntityPacket packet = new EntityPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
@@ -90,9 +94,17 @@ public class Network {
 	}
 
 	public static void sendPlayer(int connectionID) {
-		Player player = Handler.getPlayerByID(connectionID);
+		Player player = EntityHandler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
 		packet.data = player.toPlayerData();
 		server.sendToAllTCP(packet);
+	}
+	
+	public static void sendConstants(Connection con) {
+		ConstantsPacket packet = new ConstantsPacket();
+		packet.TILE_SIZE = Maps.TILE_SIZE;
+		packet.MAX_MAPS = Maps.MAX_MAPS;
+		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
+		con.sendTCP(packet);
 	}
 }

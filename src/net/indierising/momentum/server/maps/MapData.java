@@ -2,7 +2,6 @@ package net.indierising.momentum.server.maps;
 
 import java.io.File;
 
-import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.SlickException;
@@ -49,7 +48,7 @@ public class MapData {
 				// check for blocked tiles
 				value = map.getTileProperty(tileID, "blocked", "false");
 				if(value.equals("true")) {
-					blockedRect[x][y] = new Rectangle(x*Globals.TILE_SIZE, y*Globals.TILE_SIZE, Globals.TILE_SIZE, Globals.TILE_SIZE);
+					blockedRect[x][y] = new Rectangle(x*Maps.TILE_SIZE, y*Maps.TILE_SIZE, Maps.TILE_SIZE, Maps.TILE_SIZE);
 				} else {
 					blockedRect[x][y] = new Rectangle(0, 0, 0, 0);
 				}

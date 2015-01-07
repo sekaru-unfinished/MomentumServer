@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.SlickException;
 
 public class Maps {
+	public static final int TILE_SIZE = 32;
 	public static final int MAX_MAPS = 1;
 	
 	public static final int MAP_TYPE_NORMAL = 0;

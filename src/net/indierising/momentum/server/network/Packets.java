@@ -3,7 +3,12 @@ package net.indierising.momentum.server.network;
 import net.indierising.momentum.server.entitydata.PlayerData;
 
 public class Packets {
-	// inputs
+	public static class ConstantsPacket {
+		public int TILE_SIZE;
+		public int MAX_MAPS;
+		public int MAX_MAP_NPCS;
+	}
+	
 	public static class Key {
 		public int key;
 		public boolean pressed;// whether the key was pressed or released.

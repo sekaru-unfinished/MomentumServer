@@ -1,7 +1,7 @@
 package net.indierising.momentum.server.entities;
 
-import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.entitydata.PlayerData;
+import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.Key;
 
@@ -12,11 +12,13 @@ public class Player extends Entity {
 	boolean up, down, left, right;
 	private int connectionID;
 	private String username;
+	private int map;
 
 	public Player(PlayerData data) {
-		super(data.connectionID, new Vector2f(data.x, data.y), Globals.TILE_SIZE, Globals.TILE_SIZE, 0.3f, data.dir, data.imageLoc);
+		super(data.connectionID, new Vector2f(data.x, data.y), Maps.TILE_SIZE, Maps.TILE_SIZE, 4f, data.dir, data.imageLoc);
 		this.setConnectionID(data.connectionID);
 		this.setUsername(data.username);
+		this.setMap(data.map);
 	}
 
 	public void update(int delta){
@@ -60,7 +62,7 @@ public class Player extends Entity {
 	}
 	
 	// TODO collisions
-	public boolean clearLocation(float nx,float ny){
+	public boolean clearLocation(float nx, float ny) {
 		return true;
 	}
 
@@ -78,6 +80,14 @@ public class Player extends Entity {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public int getMap() {
+		return map;
+	}
+	
+	public void setMap(int map) {
+		this.map = map;
 	}
 	
 	// convert to a sendable object
