@@ -8,6 +8,7 @@ import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.entities.Player;
 import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
+import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.ConstantsPacket;
 import net.indierising.momentum.server.network.Packets.EntityPacket;
 import net.indierising.momentum.server.network.Packets.Key;
@@ -57,6 +58,7 @@ public class Network {
 		kryo.register(PlayerData.class);
 		kryo.register(PlayerMove.class);
 		kryo.register(EntityPacket.class);
+		kryo.register(ChatMessage.class);
 	}
 	
 	public static void sendMovement(int connectionID) {

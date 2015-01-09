@@ -6,6 +6,7 @@ import net.indierising.momentum.server.Main;
 import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.maps.Maps;
+import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 
@@ -41,6 +42,12 @@ public class Reciever extends Listener{
 		if(object instanceof Key){
 			Key packet = (Key) object;
 			EntityHandler.getPlayerByID(connection.getID()).setKeys(packet);
+		}
+		
+		if(object instanceof ChatMessage){
+			ChatMessage packet = (ChatMessage) object;
+			packet.name = EntityHandler.getPlayerByID(connection.getID()).getUsername();
+			Network.server.sendToAllUDP(packet);
 		}
 	}
 	
