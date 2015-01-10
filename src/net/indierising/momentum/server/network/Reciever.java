@@ -1,6 +1,9 @@
 package net.indierising.momentum.server.network;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import net.indierising.momentum.server.Main;
 import net.indierising.momentum.server.entities.Entity;
@@ -46,7 +49,12 @@ public class Reciever extends Listener{
 		
 		if(object instanceof ChatMessage){
 			ChatMessage packet = (ChatMessage) object;
-			packet.name = EntityHandler.getPlayerByID(connection.getID()).getUsername();
+			
+			DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+			Date date = new Date();
+			packet.title = dateFormat.format(date) + ": ";
+			packet.title += EntityHandler.getPlayerByID(connection.getID()).getUsername();
+			packet.message = "'" + packet.message + "'";
 			Network.server.sendToAllUDP(packet);
 		}
 	}
