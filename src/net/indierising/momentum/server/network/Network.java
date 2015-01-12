@@ -10,7 +10,7 @@ import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.ConstantsPacket;
-import net.indierising.momentum.server.network.Packets.EntityPacket;
+import net.indierising.momentum.server.network.Packets.NPCPacket;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerMove;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
@@ -57,7 +57,7 @@ public class Network {
 		kryo.register(PlayerPacket.class);
 		kryo.register(PlayerData.class);
 		kryo.register(PlayerMove.class);
-		kryo.register(EntityPacket.class);
+		kryo.register(NPCPacket.class);
 		kryo.register(ChatMessage.class);
 	}
 	
@@ -73,7 +73,7 @@ public class Network {
 	
 	public static void sendNPCMovement(int id) {
 		Entity entity = EntityHandler.getNPCByID(id);
-		EntityPacket packet = new EntityPacket();
+		NPCPacket packet = new NPCPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
 		packet.direction = entity.getDir();
@@ -85,7 +85,7 @@ public class Network {
 	
 	public static void sendNPC(int id) {
 		Entity entity = EntityHandler.getNPCByID(id);
-		EntityPacket packet = new EntityPacket();
+		NPCPacket packet = new NPCPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
 		packet.direction = entity.getDir();
