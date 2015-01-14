@@ -1,0 +1,21 @@
+[TODO]
+
+Mali:
+- [15/1] Only send certain keys, perhaps an array
+- [16/1] Class system
+- [18/1] NPCs
+-- Movement, health, drops, spells they cast, etc.
+- [21/1] Combat system (melee + spells).
+-- Spells: DoTs, HoTs, Damage, Healing, etc.
+- [23/1] Hotbar system
+- [25/1] Player stuff like inventory
+
+Tudor:
+- [15/1] Camera system + different layer rendering options (copy SS)
+- [16/1] Menu states
+-- Login, Register, Credits
+- [17/1] Collisions (Mali can't be trusted with this).
+- [18/1] Branching chat system
+- [21/1] Quest system
+- [22/1] Map attributes (warp, etc)
+- [23/1] Stat system + scaling algorithm option
