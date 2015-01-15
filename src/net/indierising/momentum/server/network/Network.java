@@ -59,6 +59,7 @@ public class Network {
 		kryo.register(PlayerMove.class);
 		kryo.register(NPCPacket.class);
 		kryo.register(ChatMessage.class);
+		kryo.register(Class.class);
 	}
 	
 	public static void sendMovement(int connectionID) {
