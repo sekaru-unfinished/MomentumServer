@@ -4,6 +4,7 @@ import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.Key;
+import net.indierising.momentum.server.network.Packets.PlayerClass;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Vector2f;
@@ -13,12 +14,14 @@ public class Player extends Entity {
 	private int connectionID;
 	private String username;
 	private int map;
+	private PlayerClass playerClass;
 
 	public Player(PlayerData data) {
 		super(data.connectionID, new Vector2f(data.x, data.y), Maps.TILE_SIZE, Maps.TILE_SIZE, 4f, data.dir, data.imageLoc);
 		this.setConnectionID(data.connectionID);
 		this.setUsername(data.username);
 		this.setMap(data.map);
+		this.setPlayerClass(data.playerClass);
 	}
 
 	public void update(int delta){
@@ -93,5 +96,13 @@ public class Player extends Entity {
 	// convert to a sendable object
 	public PlayerData toPlayerData() {
 		return new PlayerData(this);
+	}
+
+	public void setPlayerClass(PlayerClass playerClass) {
+		this.playerClass = playerClass;
+	}
+
+	public PlayerClass getPlayerClass() {
+		return playerClass;
 	}
 }

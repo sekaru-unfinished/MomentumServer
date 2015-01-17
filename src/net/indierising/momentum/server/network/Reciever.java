@@ -6,11 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import net.indierising.momentum.server.Main;
+import net.indierising.momentum.server.entities.ClassSystem;
 import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.Key;
+import net.indierising.momentum.server.network.Packets.PlayerClass;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 
 import org.newdawn.slick.geom.Vector2f;
@@ -31,6 +33,12 @@ public class Reciever extends Listener{
 			PlayerPacket packet = (PlayerPacket) object;
 			try {
 				packet.data.connectionID = connection.getID();
+				PlayerClass playerClass = new PlayerClass();
+				// organise this at some point to happen when the player clicks their class.
+				playerClass = ClassSystem.data.get(0);
+				
+				packet.data.playerClass = playerClass;
+				System.out.println(packet.data.playerClass.name);
 				EntityHandler.addPlayer(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -38,8 +46,8 @@ public class Reciever extends Listener{
 			Network.sendPlayer(connection.getID());
 			
 			// send a test npc
-			EntityHandler.npcs.add(new Entity(2, new Vector2f(500, 32), Maps.TILE_SIZE, Maps.TILE_SIZE, 0.3f, Main.DIR_DOWN, "data/assets/images/Block.png"));
-			Network.sendNPC(2);
+			EntityHandler.npcs.add(new Entity(connection.getID(), new Vector2f(500, 32), Maps.TILE_SIZE, Maps.TILE_SIZE, 0.3f, Main.DIR_DOWN, "data/assets/images/Block.png"));
+			Network.sendNPC(connection.getID());
 		}
 		
 		if(object instanceof Key){

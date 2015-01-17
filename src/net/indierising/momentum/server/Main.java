@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import net.indierising.momentum.server.entities.ClassSystem;
 import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
@@ -25,6 +26,8 @@ public class Main extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		// init maps
 		Maps.initMaps();
+		// load player classes
+		ClassSystem.loadClasses();
 		
 		// TODO error log in data folder	
 		TagReader config = null;
@@ -50,6 +53,7 @@ public class Main extends BasicGame{
 		
 		// let us know where the server has started
 		Globals.log("Server started on: " + Globals.network.ip + " TCP: " + Globals.network.tcpPort + " UDP: " + Globals.network.udpPort); 	
+		
 	}
 	
 	public void render(GameContainer gc, Graphics g) throws SlickException {}

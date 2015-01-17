@@ -14,6 +14,7 @@ import net.indierising.momentum.server.network.Packets.NPCPacket;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerMove;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
+import net.indierising.momentum.server.network.Packets.PlayerClass;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -59,7 +60,7 @@ public class Network {
 		kryo.register(PlayerMove.class);
 		kryo.register(NPCPacket.class);
 		kryo.register(ChatMessage.class);
-		kryo.register(Class.class);
+		kryo.register(PlayerClass.class);
 	}
 	
 	public static void sendMovement(int connectionID) {

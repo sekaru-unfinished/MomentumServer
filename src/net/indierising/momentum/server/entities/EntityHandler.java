@@ -57,7 +57,7 @@ public class EntityHandler {
 			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
-			
+
 			bw.close();
 		}
 	

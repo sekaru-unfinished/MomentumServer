@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.server.utils.TagReader;
-import net.indierising.momentum.server.network.Packets.Class;;
+import net.indierising.momentum.server.network.Packets.PlayerClass;;
 /**
  * This class contains information about player classes, including definitions and loading.
  */
 public class ClassSystem {
-	public static ArrayList<Class> data = new ArrayList<Class>();
+	public static ArrayList<PlayerClass> data = new ArrayList<PlayerClass>();
 	
-	public void loadClasses(){
+	public static void loadClasses(){
 		File f = new File("data/entities/classes");
 		File[] matchingFiles = f.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
@@ -29,7 +29,7 @@ public class ClassSystem {
 			}
 			
 			// create a temporary class to add to our data
-			Class temp = new Class();
+			PlayerClass temp = new PlayerClass();
 			temp.name = reader.findData("name");
 			temp.description = reader.findData("description");
 			temp.id = i;
@@ -37,6 +37,7 @@ public class ClassSystem {
 			temp.health = Integer.parseInt(reader.findData("health"));
 			
 			data.add(temp);
+			System.out.println(temp.name);
 		}
 	}
 
