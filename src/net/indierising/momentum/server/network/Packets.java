@@ -25,10 +25,13 @@ public class Packets {
 	}
 	
 	public static class NPCPacket {
-		public float x, y, speed;
+		public float x,y,speed;
 		public int direction;
 		public String imageLocation;
 		public int id;
+		public int health,damage;
+		public String name;
+		public float width,height;
 	}
 	
 	public static class ChatMessage {

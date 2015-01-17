@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
+import net.indierising.momentum.server.entities.NPC;
 import net.indierising.momentum.server.entities.Player;
 import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
@@ -85,16 +86,21 @@ public class Network {
 		server.sendToAllUDP(packet);
 	}
 	
-	public static void sendNPC(int id) {
-		Entity entity = EntityHandler.getNPCByID(id);
+	public static void sendNPC(int id,int connectionID) {
+		NPC entity = EntityHandler.getNPCByID(id);
 		NPCPacket packet = new NPCPacket();
 		packet.x = entity.getX();
 		packet.y = entity.getY();
+		packet.width = entity.getWidth();
+		packet.height = entity.getHeight();
 		packet.direction = entity.getDir();
 		packet.speed = entity.getSpeed();
 		packet.imageLocation = entity.getImageLoc();
 		packet.id = id;
-		server.sendToAllTCP(packet);
+		packet.name = entity.getName();
+		packet.damage = entity.getDamage();
+		packet.health = entity.getHealth();
+		server.sendToTCP(connectionID, packet);
 	}
 
 	public static void sendPlayer(int connectionID) {
@@ -110,5 +116,11 @@ public class Network {
 		packet.MAX_MAPS = Maps.MAX_MAPS;
 		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
 		con.sendTCP(packet);
+	}
+
+	public static void sendNPCS(int id) {
+		for(int i = 0; i < EntityHandler.npcs.size(); i++){
+			sendNPC(i,id);
+		}
 	}
 }

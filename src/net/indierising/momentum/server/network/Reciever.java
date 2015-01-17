@@ -9,6 +9,7 @@ import net.indierising.momentum.server.Main;
 import net.indierising.momentum.server.entities.ClassSystem;
 import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
+import net.indierising.momentum.server.entities.NPC;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.Key;
@@ -45,9 +46,7 @@ public class Reciever extends Listener{
 			}
 			Network.sendPlayer(connection.getID());
 			
-			// send a test npc
-			EntityHandler.npcs.add(new Entity(connection.getID(), new Vector2f(500, 32), Maps.TILE_SIZE, Maps.TILE_SIZE, 0.3f, Main.DIR_DOWN, "data/assets/images/Block.png"));
-			Network.sendNPC(connection.getID());
+			Network.sendNPCS(connection.getID());
 		}
 		
 		if(object instanceof Key){

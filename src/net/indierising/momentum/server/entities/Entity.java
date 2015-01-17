@@ -3,7 +3,7 @@ package net.indierising.momentum.server.entities;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
-	float width, height;
+	private float width, height;
 	private Vector2f pos;
 	int dir;
 	int id;
@@ -12,8 +12,8 @@ public class Entity {
 	
 	public Entity(int id, Vector2f pos, float width, float height, float speed, int dir, String imageLocation){
 		this.pos = pos;
-		this.width = width;
-		this.height = height;
+		this.setWidth(width);
+		this.setHeight(height);
 		this.id = id;
 		this.setSpeed(speed);
 		this.dir = dir;
@@ -62,5 +62,21 @@ public class Entity {
 
 	public void update(int delta) {
 		setX(getX() + 0.3f);
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getHeight() {
+		return height;
 	}
 }

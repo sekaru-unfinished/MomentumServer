@@ -4,8 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.newdawn.slick.geom.Vector2f;
 
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
@@ -13,7 +16,7 @@ import net.indierising.momentum.server.utils.TagReader;
 
 public class EntityHandler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
-	public static ArrayList<Entity> npcs = new ArrayList<Entity>();
+	public static ArrayList<NPC> npcs = new ArrayList<NPC>();
 	
 	public static void update(int delta){
 		for(int i = 0; i < players.size(); i++){
@@ -35,7 +38,7 @@ public class EntityHandler {
 		return null;
 	}
 	
-	public static Entity getNPCByID(int id){
+	public static NPC getNPCByID(int id){
 		for(int i = 0; i < npcs.size(); i++){
 			if(npcs.get(i).id == id){
 				return npcs.get(i);
@@ -73,6 +76,36 @@ public class EntityHandler {
 		}
 		
 		players.add(new Player(packet.data));
+	}
+	
+	public static void loadNPCS(){
+		File f = new File("data/entities/npcs/");
+		File[] matchingFiles = f.listFiles(new FilenameFilter() {
+		    public boolean accept(File dir, String name) {
+		        return name.endsWith("dat");
+		    }
+		});
+		for(int i = 0; i < matchingFiles.length; i++){
+
+			TagReader reader = new TagReader(new File("data/entities/npcs/" + matchingFiles[i].getName()));
+			try {
+				reader.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String name = reader.findData("name");
+			String spriteLocation = reader.findData("sprite");
+			float x = Float.parseFloat(reader.findData("x"));
+			float y = Float.parseFloat(reader.findData("y"));
+			float speed = Float.parseFloat(reader.findData("speed"));
+			int health = Integer.parseInt(reader.findData("health"));
+			int damage = Integer.parseInt(reader.findData("damage"));
+			int width = Integer.parseInt(reader.findData("width"));
+			int height = Integer.parseInt(reader.findData("height"));
+			
+			npcs.add(new NPC(i,new Vector2f(x,y),width,height,speed,0,spriteLocation,health,damage,name));
+		}
 	}
 	
 	public static void logout(int connectionID) throws IOException{
