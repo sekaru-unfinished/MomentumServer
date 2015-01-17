@@ -12,6 +12,7 @@ public class NPC extends Entity {
 		this.setHealth(health);
 		this.setDamage(damage);
 		this.setName(name);
+		this.setCollisionBox(getX(), getY(), getWidth(), getHeight());
 	}
 
 	public void setDamage(int damage) {

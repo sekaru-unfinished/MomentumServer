@@ -1,14 +1,16 @@
 package net.indierising.momentum.server.entities;
 
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
 	private float width, height;
-	private Vector2f pos;
+	protected Vector2f pos;
 	int dir;
 	int id;
 	private float speed;
 	private String imageLoc;
+	private Rectangle entityRect;
 	
 	public Entity(int id, Vector2f pos, float width, float height, float speed, int dir, String imageLocation){
 		this.pos = pos;
@@ -34,6 +36,7 @@ public class Entity {
 
 	public void setX(float x) {
 		pos.set(x, pos.getY());
+		entityRect.setX(x);
 	}
 
 	public float getY() {
@@ -42,6 +45,7 @@ public class Entity {
 
 	public void setY(float y) {
 		pos.set(pos.getX(), y);
+		entityRect.setX(y);
 	}
 	
 	public int getDir() {
@@ -50,6 +54,10 @@ public class Entity {
 
 	public void setDir(int dir) {
 		this.dir = dir;
+	}
+	
+	public void setCollisionBox(float x, float y, float w, float h) {
+		entityRect = new Rectangle(x, y, w, h);
 	}
 	
 	public float getSpeed() {

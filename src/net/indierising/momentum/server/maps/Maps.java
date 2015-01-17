@@ -7,8 +7,9 @@ import net.indierising.momentum.server.entities.EntityHandler;
 import org.newdawn.slick.SlickException;
 
 public class Maps {
-	public static final int TILE_SIZE = 32;
+	public static final int TILE_SIZE = 48;
 	public static final int MAX_MAPS = 1;
+	public static final String MAP_PATH = "data/maps/";
 	
 	public static final int MAP_TYPE_NORMAL = 0;
 	public static final int MAP_TYPE_PVP = 1;
@@ -21,7 +22,7 @@ public class Maps {
 		
 		// add them to the list of our maps
 		for(int i=0; i<MAX_MAPS; i++) {
-			maps.add(new MapData("data/maps/map" + (i+1)));
+			maps.add(new MapData("map" + (i+1)));
 		}
 		
 		// load npcs

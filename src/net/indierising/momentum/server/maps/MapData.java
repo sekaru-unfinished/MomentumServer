@@ -10,19 +10,18 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class MapData {
 	File dataFile;
-	String name; int attributesLayer, mapType;
-	TiledMap map; Rectangle blockedRect[][];
+	String name; int mapType;
+	public TiledMap map; public Rectangle blockedRect[][];
 	
-	public MapData(String path) throws SlickException {
-		map = new TiledMap(path + ".tmx");
+	public MapData(String mapNum) throws SlickException {
+		map = new TiledMap(Maps.MAP_PATH + mapNum + ".tmx");
 		
 		// load up the data file for reading
-		dataFile = new File(path + ".mo");
+		dataFile = new File(Maps.MAP_PATH + "properties/" + mapNum + ".mo");
 		TagReader reader = new TagReader(dataFile);
 		
 		// get some useful info about the map
 		name = reader.findData("map", "A Map");
-		attributesLayer = Integer.valueOf(reader.findData("attributes", "0"));
 		mapType = Integer.valueOf(reader.findData("type", "0"));
 		
 		// search for NPCs
@@ -43,7 +42,7 @@ public class MapData {
 		for(int x=0; x<map.getWidth(); x++) {
 			for(int y=0; y<map.getHeight(); y++) {
 				// get the tile ID
-				tileID = map.getTileId(x, y, attributesLayer);
+				tileID = map.getTileId(x, y, map.getLayerIndex("Attributes"));
 				
 				// check for blocked tiles
 				value = map.getTileProperty(tileID, "blocked", "false");

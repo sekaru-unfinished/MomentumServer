@@ -7,6 +7,7 @@ import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerClass;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends Entity {
@@ -17,11 +18,12 @@ public class Player extends Entity {
 	private PlayerClass playerClass;
 
 	public Player(PlayerData data) {
-		super(data.connectionID, new Vector2f(data.x, data.y), Maps.TILE_SIZE, Maps.TILE_SIZE, 4f, data.dir, data.imageLoc);
+		super(data.connectionID, new Vector2f(data.x, data.y), 32, 32, 4f, data.dir, data.imageLoc);
 		this.setConnectionID(data.connectionID);
 		this.setUsername(data.username);
 		this.setMap(data.map);
 		this.setPlayerClass(data.playerClass);
+		this.setCollisionBox(getX(), getY(), getWidth(), getHeight());
 	}
 
 	public void update(int delta){
@@ -42,7 +44,7 @@ public class Player extends Entity {
 		float nx = getX()+dx;
 		float ny = getY()+dy;
 		if(dx != 0 || dy != 0){
-			if(clearLocation(nx,ny)){
+			if(!isBlocked(nx,ny)){
 				setX(nx);
 				setY(ny);
 				// send this to our players
@@ -64,11 +66,23 @@ public class Player extends Entity {
 		}
 	}
 	
-	// TODO collisions
-	public boolean clearLocation(float nx, float ny) {
-		return true;
+	public boolean isBlocked(float nx, float ny) {
+		// set the collision box to this position
+		Rectangle collisionBox = new Rectangle(nx, ny, getWidth(), getHeight());
+		
+		float mapW = Maps.maps.get(getMap()).map.getWidth();
+		float mapH = Maps.maps.get(getMap()).map.getHeight();
+		
+		for(int x=0; x<mapW; x++) {
+			for(int y=0; y<mapH; y++) {
+				if(collisionBox.intersects(Maps.maps.get(getMap()).blockedRect[x][y])) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
-
+	
 	public int getConnectionID() {
 		return connectionID;
 	}
