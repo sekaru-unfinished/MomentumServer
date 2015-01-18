@@ -8,8 +8,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.newdawn.slick.geom.Vector2f;
-
+import net.indierising.momentum.server.entitydata.NPCData;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 import net.indierising.momentum.server.utils.TagReader;
@@ -51,7 +50,7 @@ public class EntityHandler {
 	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
 		float x = 0, y = 0;
-		File userData = new File("data/entities/players/" + packet.data.username + ".dat");
+		File userData = new File("data/entities/players/" + packet.data.username + ".mo");
 		
 		if(!userData.exists()){
 			userData.createNewFile();
@@ -82,29 +81,30 @@ public class EntityHandler {
 		File f = new File("data/entities/npcs/");
 		File[] matchingFiles = f.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
-		        return name.endsWith("dat");
+		        return name.endsWith("mo");
 		    }
 		});
+		
 		for(int i = 0; i < matchingFiles.length; i++){
-
 			TagReader reader = new TagReader(new File("data/entities/npcs/" + matchingFiles[i].getName()));
 			try {
 				reader.read();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String name = reader.findData("name");
-			String spriteLocation = reader.findData("sprite");
-			float x = Float.parseFloat(reader.findData("x"));
-			float y = Float.parseFloat(reader.findData("y"));
-			float speed = Float.parseFloat(reader.findData("speed"));
-			int health = Integer.parseInt(reader.findData("health"));
-			int damage = Integer.parseInt(reader.findData("damage"));
-			int width = Integer.parseInt(reader.findData("width"));
-			int height = Integer.parseInt(reader.findData("height"));
 			
-			npcs.add(new NPC(i,new Vector2f(x,y),width,height,speed,0,spriteLocation,health,damage,name));
+			NPCData data = new NPCData();
+			data.name = reader.findData("name");
+			data.imageLoc = reader.findData("sprite");
+			data.x = Float.parseFloat(reader.findData("x"));
+			data.y = Float.parseFloat(reader.findData("y"));
+			data.speed = Float.parseFloat(reader.findData("speed"));
+			data.health = Integer.parseInt(reader.findData("health"));
+			data.damage = Integer.parseInt(reader.findData("damage"));
+			data.width = Integer.parseInt(reader.findData("width"));
+			data.height = Integer.parseInt(reader.findData("height"));
+			
+			npcs.add(new NPC(data));
 		}
 	}
 	
@@ -121,9 +121,10 @@ public class EntityHandler {
 			bw.write("<name>" + player.getUsername() + "\n");
 			bw.write("<x>" + player.getX() + "\n");
 			bw.write("<y>" + player.getY() + "\n");
-			bw.write("<render>" + player.getImageLoc());
+			bw.write("<sprite>" + player.getImageLoc());
 			bw.close();
 		}
+		
 		players.remove(player);
 	}
 }

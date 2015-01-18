@@ -7,15 +7,17 @@ import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.entities.NPC;
 import net.indierising.momentum.server.entities.Player;
+import net.indierising.momentum.server.entitydata.NPCData;
 import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.ConstantsPacket;
-import net.indierising.momentum.server.network.Packets.NPCPacket;
 import net.indierising.momentum.server.network.Packets.Key;
+import net.indierising.momentum.server.network.Packets.NPCMove;
+import net.indierising.momentum.server.network.Packets.NPCPacket;
+import net.indierising.momentum.server.network.Packets.PlayerClass;
 import net.indierising.momentum.server.network.Packets.PlayerMove;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
-import net.indierising.momentum.server.network.Packets.PlayerClass;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -59,9 +61,20 @@ public class Network {
 		kryo.register(PlayerPacket.class);
 		kryo.register(PlayerData.class);
 		kryo.register(PlayerMove.class);
-		kryo.register(NPCPacket.class);
-		kryo.register(ChatMessage.class);
 		kryo.register(PlayerClass.class);
+		
+		kryo.register(NPCData.class);
+		kryo.register(NPCPacket.class);
+		kryo.register(NPCMove.class);
+		
+		kryo.register(ChatMessage.class);
+	}
+	
+	public static void sendPlayer(int connectionID) {
+		Player player = EntityHandler.getPlayerByID(connectionID);
+		PlayerPacket packet = new PlayerPacket();
+		packet.data = player.toPlayerData();
+		server.sendToAllTCP(packet);
 	}
 	
 	public static void sendMovement(int connectionID) {
@@ -74,40 +87,21 @@ public class Network {
 		server.sendToAllUDP(packet);
 	}
 	
-	public static void sendNPCMovement(int id) {
-		Entity entity = EntityHandler.getNPCByID(id);
+	public static void sendNPC(int id, int connectionID) {
+		NPC npc = EntityHandler.getNPCByID(id);
 		NPCPacket packet = new NPCPacket();
-		packet.x = entity.getX();
-		packet.y = entity.getY();
-		packet.direction = entity.getDir();
-		packet.speed = entity.getSpeed();
-		packet.imageLocation = entity.getImageLoc();
-		packet.id = id;
-		server.sendToAllUDP(packet);
-	}
-	
-	public static void sendNPC(int id,int connectionID) {
-		NPC entity = EntityHandler.getNPCByID(id);
-		NPCPacket packet = new NPCPacket();
-		packet.x = entity.getX();
-		packet.y = entity.getY();
-		packet.width = entity.getWidth();
-		packet.height = entity.getHeight();
-		packet.direction = entity.getDir();
-		packet.speed = entity.getSpeed();
-		packet.imageLocation = entity.getImageLoc();
-		packet.id = id;
-		packet.name = entity.getName();
-		packet.damage = entity.getDamage();
-		packet.health = entity.getHealth();
+		packet.data = npc.toNPCData();
 		server.sendToTCP(connectionID, packet);
 	}
-
-	public static void sendPlayer(int connectionID) {
-		Player player = EntityHandler.getPlayerByID(connectionID);
-		PlayerPacket packet = new PlayerPacket();
-		packet.data = player.toPlayerData();
-		server.sendToAllTCP(packet);
+	
+	public static void sendNPCMovement(int id) {
+		Entity npc = EntityHandler.getNPCByID(id);
+		NPCMove packet = new NPCMove();
+		packet.id = id;
+		packet.x = npc.getX();
+		packet.y = npc.getY();
+		packet.dir = npc.getDir();
+		server.sendToAllUDP(packet);
 	}
 	
 	public static void sendConstants(Connection con) {

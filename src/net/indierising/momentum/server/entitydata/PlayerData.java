@@ -22,7 +22,6 @@ public class PlayerData {
 		this.dir = player.getDir();
 		this.imageLoc = player.getImageLoc();
 		this.playerClass = player.getPlayerClass();
-		System.out.println(player.getPlayerClass().name);
 	}
 	
 	public String toString() {

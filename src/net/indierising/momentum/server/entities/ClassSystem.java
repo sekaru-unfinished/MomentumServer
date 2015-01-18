@@ -17,9 +17,10 @@ public class ClassSystem {
 		File f = new File("data/entities/classes");
 		File[] matchingFiles = f.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
-		        return name.endsWith("dat");
+		        return name.endsWith("mo");
 		    }
 		});
+		
 		for(int i = 0; i < matchingFiles.length; i++){
 			TagReader reader = new TagReader(new File("data/entities/classes/" + matchingFiles[i].getName()));
 			try {
@@ -37,7 +38,6 @@ public class ClassSystem {
 			temp.health = Integer.parseInt(reader.findData("health"));
 			
 			data.add(temp);
-			System.out.println(temp.name);
 		}
 	}
 

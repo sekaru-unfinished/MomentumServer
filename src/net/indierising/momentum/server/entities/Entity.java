@@ -22,6 +22,10 @@ public class Entity {
 		this.setImageLoc(imageLocation);
 	}
 	
+	public int getID() {
+		return id;
+	}
+	
 	public String getImageLoc() {
 		return imageLoc;
 	}

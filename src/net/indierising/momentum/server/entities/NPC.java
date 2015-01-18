@@ -1,36 +1,22 @@
 package net.indierising.momentum.server.entities;
 
 
+import net.indierising.momentum.server.entitydata.NPCData;
+
 import org.newdawn.slick.geom.Vector2f;
 
 public class NPC extends Entity {
-	private int health,damage;
 	private String name;
+	private float health, damage;
 	
-	public NPC(int id, Vector2f pos, float width, float height, float speed, int direction, String imageLocation,int health,int damage,String name) {
-		super(id, pos, width, height, speed, direction, imageLocation);
+	public NPC(NPCData data) {
+		super(data.id, new Vector2f(data.x, data.y), data.width, data.height, data.speed, data.dir, data.imageLoc);
 		this.setHealth(health);
 		this.setDamage(damage);
 		this.setName(name);
 		this.setCollisionBox(getX(), getY(), getWidth(), getHeight());
 	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -38,6 +24,25 @@ public class NPC extends Entity {
 	public String getName() {
 		return name;
 	}
-
 	
+	public void setHealth(float health) {
+		this.health = health;
+	}
+
+	public float getHealth() {
+		return health;
+	}
+
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
+	public float getDamage() {
+		return damage;
+	}
+	
+	// convert to a sendable object
+	public NPCData toNPCData() {
+		return new NPCData(this);
+	}
 }

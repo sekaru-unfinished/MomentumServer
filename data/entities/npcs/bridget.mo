@@ -1,8 +1,6 @@
 <name>Bridget
 <x>552.0
-
 <y>148.0
-
 <width>32
 <height>32
 <speed>3

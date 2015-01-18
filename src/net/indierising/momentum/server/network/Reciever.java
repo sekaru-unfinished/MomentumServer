@@ -5,18 +5,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import net.indierising.momentum.server.Main;
 import net.indierising.momentum.server.entities.ClassSystem;
-import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
-import net.indierising.momentum.server.entities.NPC;
-import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Packets.ChatMessage;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerClass;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
-
-import org.newdawn.slick.geom.Vector2f;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -39,13 +33,12 @@ public class Reciever extends Listener{
 				playerClass = ClassSystem.data.get(0);
 				
 				packet.data.playerClass = playerClass;
-				System.out.println(packet.data.playerClass.name);
 				EntityHandler.addPlayer(packet);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			Network.sendPlayer(connection.getID());
 			
+			Network.sendPlayer(connection.getID());
 			Network.sendNPCS(connection.getID());
 		}
 		
