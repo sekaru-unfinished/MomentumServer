@@ -1,6 +1,8 @@
 [TODO]
 
 Mali:
+- (Do spritesheet animations for the sprite in the "sprites" folder)
+
 - [18/1] NPCs
 -- Movement, health, drops, spells they cast, etc.
 - [21/1] Combat system (melee + spells).
