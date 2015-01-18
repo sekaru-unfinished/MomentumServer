@@ -109,6 +109,8 @@ public class Network {
 		packet.TILE_SIZE = Maps.TILE_SIZE;
 		packet.MAX_MAPS = Maps.MAX_MAPS;
 		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
+		packet.PLAYER_WIDTH = Player.WIDTH;
+		packet.PLAYER_HEIGHT = Player.HEIGHT;
 		con.sendTCP(packet);
 	}
 

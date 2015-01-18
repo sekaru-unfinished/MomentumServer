@@ -11,6 +11,8 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends Entity {
+	public final static float WIDTH = 32, HEIGHT = 32;
+	
 	boolean up, down, left, right;
 	private int connectionID;
 	private String username;
@@ -18,7 +20,7 @@ public class Player extends Entity {
 	private PlayerClass playerClass;
 
 	public Player(PlayerData data) {
-		super(data.connectionID, new Vector2f(data.x, data.y), 32, 32, 4f, data.dir, data.imageLoc);
+		super(data.connectionID, new Vector2f(data.x, data.y), WIDTH, HEIGHT, 4f, data.dir, data.imageLoc);
 		this.setConnectionID(data.connectionID);
 		this.setUsername(data.username);
 		this.setMap(data.map);

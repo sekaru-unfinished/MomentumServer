@@ -6,9 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 public class Convs {
 	final static int MAX_CHATS=20;
 	public static ConvData conv = new ConvData();
@@ -37,11 +34,7 @@ public class Convs {
 	    		conv.chat[index].text = line.substring(6);
 	    	// face
 	    	} else if(line.startsWith("<face>")) {
-	    		try {
-					conv.face[index] = new Image("res/faces/" + line.substring(6) + ".png");
-				} catch (SlickException e) {
-					e.printStackTrace();
-				}
+				conv.face[index] = "data/assets/faces/" + line.substring(6) + ".png";
 	    	// options
 	    	} else if(line.startsWith("<option>")) {
 	    		conv.chat[index].option[optionIndex] = line.substring(8);

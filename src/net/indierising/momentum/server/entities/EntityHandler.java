@@ -119,9 +119,9 @@ public class EntityHandler {
 			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("<name>" + player.getUsername() + "\n");
+			bw.write("<class>" + player.getPlayerClass());
 			bw.write("<x>" + player.getX() + "\n");
 			bw.write("<y>" + player.getY() + "\n");
-			bw.write("<sprite>" + player.getImageLoc());
 			bw.close();
 		}
 		
