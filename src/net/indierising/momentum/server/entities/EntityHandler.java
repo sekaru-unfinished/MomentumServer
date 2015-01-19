@@ -51,7 +51,7 @@ public class EntityHandler {
 	public static void addPlayer(PlayerPacket packet) throws IOException{
 		float x = 0, y = 0;
 		File userData = new File("data/entities/players/" + packet.data.username + ".mo");
-		
+	
 		if(!userData.exists()){
 			userData.createNewFile();
 			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
@@ -59,6 +59,10 @@ public class EntityHandler {
 			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
+			
+			Player p = getPlayerByID(packet.data.connectionID);
+			bw.write("<width>" + p.WIDTH + "\n");
+			bw.write("<height>" + p.HEIGHT);
 
 			bw.close();
 		}
@@ -68,8 +72,11 @@ public class EntityHandler {
 		try {
 			reader = new TagReader(userData);
 			reader.read();
-			x = Float.parseFloat(reader.findData("x"));
-			y = Float.parseFloat(reader.findData("y"));
+			packet.data.x = Float.parseFloat(reader.findData("x"));
+			packet.data.y = Float.parseFloat(reader.findData("y"));
+			packet.data.width = Float.parseFloat(reader.findData("width"));
+			packet.data.height = Float.parseFloat(reader.findData("height"));
+			packet.data.imageLoc = reader.findData("sprite");
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
 		}
@@ -103,7 +110,7 @@ public class EntityHandler {
 			data.damage = Integer.parseInt(reader.findData("damage"));
 			data.width = Integer.parseInt(reader.findData("width"));
 			data.height = Integer.parseInt(reader.findData("height"));
-			
+			data.dir = 2;
 			npcs.add(new NPC(data));
 		}
 	}

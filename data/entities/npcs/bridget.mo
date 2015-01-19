@@ -1,9 +1,9 @@
 <name>Bridget
 <x>552.0
 <y>148.0
-<width>32
+<width>16
 <height>32
 <speed>3
-<sprite>data/assets/images/Block.png
+<sprite>data/assets/sprites/player.png
 <health>50
 <damage>50
