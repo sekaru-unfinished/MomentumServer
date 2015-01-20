@@ -12,7 +12,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends Entity {
-	public final static float WIDTH = 32, HEIGHT = 32;
+	public final static float WIDTH = 32, HEIGHT = 64;
 	
 	boolean up, down, left, right;
 	private int connectionID;

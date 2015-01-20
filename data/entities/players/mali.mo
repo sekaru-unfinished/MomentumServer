@@ -1,6 +1,6 @@
 <name>mali
 <x>0.0
 <y>0.0
-<width>16
-<height>32
+<width>32
+<height>64
 <sprite>data/assets/sprites/player.png

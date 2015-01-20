@@ -60,9 +60,8 @@ public class EntityHandler {
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
 			
-			Player p = getPlayerByID(packet.data.connectionID);
-			bw.write("<width>" + p.WIDTH + "\n");
-			bw.write("<height>" + p.HEIGHT);
+			bw.write("<width>" + Player.WIDTH + "\n");
+			bw.write("<height>" + Player.HEIGHT);
 
 			bw.close();
 		}

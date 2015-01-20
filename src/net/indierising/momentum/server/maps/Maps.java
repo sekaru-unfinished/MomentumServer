@@ -7,7 +7,7 @@ import net.indierising.momentum.server.entities.EntityHandler;
 import org.newdawn.slick.SlickException;
 
 public class Maps {
-	public static final int TILE_SIZE = 48;
+	public static final int TILE_SIZE = 32;
 	public static final int MAX_MAPS = 1;
 	public static final String MAP_PATH = "data/maps/";
 	
