@@ -3,6 +3,7 @@ package net.indierising.momentum.server.network;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.entities.Entity;
 import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.entities.NPC;
@@ -70,6 +71,23 @@ public class Network {
 		kryo.register(ChatMessage.class);
 	}
 	
+	public static void sendConstants(Connection con) {
+		ConstantsPacket packet = new ConstantsPacket();
+		packet.TILE_SIZE = Maps.TILE_SIZE;
+		packet.MAX_MAPS = Maps.MAX_MAPS;
+		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
+		
+		packet.PLAYER_WIDTH = Player.WIDTH;
+		packet.PLAYER_HEIGHT = Player.HEIGHT;
+		
+		packet.DIR_UP = Globals.DIR_UP;
+		packet.DIR_DOWN = Globals.DIR_DOWN;
+		packet.DIR_LEFT = Globals.DIR_LEFT;
+		packet.DIR_RIGHT = Globals.DIR_RIGHT;
+		
+		con.sendTCP(packet);
+	}
+	
 	public static void sendPlayer(int connectionID) {
 		Player player = EntityHandler.getPlayerByID(connectionID);
 		PlayerPacket packet = new PlayerPacket();
@@ -104,16 +122,6 @@ public class Network {
 		server.sendToAllUDP(packet);
 	}
 	
-	public static void sendConstants(Connection con) {
-		ConstantsPacket packet = new ConstantsPacket();
-		packet.TILE_SIZE = Maps.TILE_SIZE;
-		packet.MAX_MAPS = Maps.MAX_MAPS;
-		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
-		packet.PLAYER_WIDTH = Player.WIDTH;
-		packet.PLAYER_HEIGHT = Player.HEIGHT;
-		con.sendTCP(packet);
-	}
-
 	public static void sendNPCS(int id) {
 		for(int i = 0; i < EntityHandler.npcs.size(); i++){
 			sendNPC(i,id);

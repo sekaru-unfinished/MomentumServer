@@ -1,5 +1,6 @@
 package net.indierising.momentum.server.entities;
 
+import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.entitydata.PlayerData;
 import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
@@ -30,21 +31,25 @@ public class Player extends Entity {
 
 	public void update(int delta){
 		float dx = 0, dy = 0;
-		if(up){
+		
+		if(up) {
 			dy-=getSpeed();
-			dir = 3;
+			dir = Globals.DIR_UP;
 		}
-		if(down){
+		
+		if(down) {
 			dy+=getSpeed();
-			dir = 0;
+			dir = Globals.DIR_DOWN;
 		}
-		if(left){
+		
+		if(left) {
 			dx-=getSpeed();
-			dir = 1;
+			dir = Globals.DIR_LEFT;
 		}
-		if(right){
+		
+		if(right) {
 			dx+=getSpeed();
-			dir = 2;
+			dir = Globals.DIR_RIGHT;
 		}
 		
 		float nx = getX()+dx;
@@ -61,13 +66,13 @@ public class Player extends Entity {
 	
 	public void setKeys(Key packet){
 		// sets the keys that were sent
-		if(packet.key == Keyboard.KEY_W){
+		if(packet.key == Keyboard.KEY_W) {
 			up = packet.pressed;
-		}else if(packet.key == Keyboard.KEY_A){
+		} else if(packet.key == Keyboard.KEY_A) {
 			left = packet.pressed;
-		}else if(packet.key == Keyboard.KEY_S){
+		} else if(packet.key == Keyboard.KEY_S) {
 			down = packet.pressed;
-		}else if(packet.key == Keyboard.KEY_D){
+		} else if(packet.key == Keyboard.KEY_D) {
 			right = packet.pressed;
 		}
 	}
