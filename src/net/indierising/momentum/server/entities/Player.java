@@ -21,7 +21,7 @@ public class Player extends Entity {
 	private PlayerClass playerClass;
 
 	public Player(PlayerData data) {
-		super(data.connectionID, new Vector2f(data.x, data.y), data.width, data.height, 4f, data.dir, data.imageLoc);
+		super(data.connectionID, new Vector2f(data.x, data.y), WIDTH, HEIGHT, 4f, data.dir, data.imageLoc);
 		this.setConnectionID(data.connectionID);
 		this.setUsername(data.username);
 		this.setMap(data.map);

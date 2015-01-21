@@ -59,10 +59,6 @@ public class EntityHandler {
 			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y);
-			
-			bw.write("<width>" + Player.WIDTH + "\n");
-			bw.write("<height>" + Player.HEIGHT);
-
 			bw.close();
 		}
 	
@@ -73,8 +69,6 @@ public class EntityHandler {
 			reader.read();
 			packet.data.x = Float.parseFloat(reader.findData("x"));
 			packet.data.y = Float.parseFloat(reader.findData("y"));
-			packet.data.width = Float.parseFloat(reader.findData("width"));
-			packet.data.height = Float.parseFloat(reader.findData("height"));
 			packet.data.imageLoc = reader.findData("sprite");
 		} catch (FileNotFoundException e) {
 			System.out.println("Data on player not found.");
