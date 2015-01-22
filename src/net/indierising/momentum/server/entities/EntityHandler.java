@@ -8,6 +8,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.entitydata.NPCData;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
@@ -103,7 +104,7 @@ public class EntityHandler {
 			data.damage = Integer.parseInt(reader.findData("damage"));
 			data.width = Integer.parseInt(reader.findData("width"));
 			data.height = Integer.parseInt(reader.findData("height"));
-			data.dir = 2;
+			data.dir = Globals.DIR_RIGHT;
 			npcs.add(new NPC(data));
 		}
 	}

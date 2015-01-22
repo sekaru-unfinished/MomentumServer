@@ -11,17 +11,17 @@ Mali:
 - [25/1] Player stuff like inventory
 
 Tudor:
-- [20/1] Map attributes (warp, etc)
 - [22/1] Stat system + scaling algorithm option
 
 [TO-IMPROVE]
 
 Tudor:
 - Finish proper Login/Register/Credits states
-- Improve collisions
+- Make it so they can name maps whatever they want
 
 [TO-ADD-LATER]
 
 Tudor:
 - Branching chat system
 - Quest system
+- Proper warp attribute

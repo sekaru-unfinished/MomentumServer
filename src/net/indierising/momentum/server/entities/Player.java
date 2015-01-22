@@ -6,6 +6,7 @@ import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.Key;
 import net.indierising.momentum.server.network.Packets.PlayerClass;
+import net.indierising.momentum.server.network.Packets.PlayerMapChange;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.geom.Rectangle;
@@ -79,7 +80,7 @@ public class Player extends Entity {
 	
 	public boolean isBlocked(float nx, float ny) {
 		// set the collision box to this position
-		Rectangle collisionBox = new Rectangle(nx, ny, getWidth(), getHeight());
+		Rectangle collisionBox = new Rectangle(nx, ny+getHeight()/2, getWidth(), getHeight()/2);
 		
 		float mapW = Maps.maps.get(getMap()).map.getWidth();
 		float mapH = Maps.maps.get(getMap()).map.getHeight();
@@ -91,6 +92,28 @@ public class Player extends Entity {
 				}
 			}
 		}
+		
+		// check if they've gone outside the map
+		if(getY()<0) {
+			// north
+			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_UP]!=-1) {
+				PlayerMapChange packet = new PlayerMapChange();
+				packet.playerID = getConnectionID();
+				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_UP]-1;
+				packet.mapName = Maps.maps.get(packet.mapID).name;
+				Network.server.sendToAllTCP(packet);
+			}
+		} else if(getY()+getHeight()/2>Maps.maps.get(getMap()).map.getHeight()*Maps.TILE_SIZE) {
+			// south
+			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_DOWN]!=-1) {
+				PlayerMapChange packet = new PlayerMapChange();
+				packet.playerID = getConnectionID();
+				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_DOWN]-1;
+				packet.mapName = Maps.maps.get(packet.mapID).name;
+				Network.server.sendToAllTCP(packet);
+			}
+		}
+		
 		return false;
 	}
 	

@@ -2,6 +2,7 @@ package net.indierising.momentum.server.maps;
 
 import java.io.File;
 
+import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.SlickException;
@@ -10,8 +11,9 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class MapData {
 	File dataFile;
-	String name; int mapType;
+	public String name; int mapType;
 	public TiledMap map; public Rectangle blockedRect[][];
+	public int[] nextMap = new int[4];
 	
 	public MapData(String mapNum) throws SlickException {
 		map = new TiledMap(Maps.MAP_PATH + mapNum + ".tmx");
@@ -23,6 +25,12 @@ public class MapData {
 		// get some useful info about the map
 		name = reader.findData("map", "A Map");
 		mapType = Integer.valueOf(reader.findData("type", "0"));
+		
+		// look for the maps around it
+		nextMap[Globals.DIR_UP] = Integer.valueOf(reader.findData("map_up", "-1"));
+		nextMap[Globals.DIR_DOWN] = Integer.valueOf(reader.findData("map_down", "-1"));
+		nextMap[Globals.DIR_LEFT] = Integer.valueOf(reader.findData("map_left", "-1"));
+		nextMap[Globals.DIR_RIGHT] = Integer.valueOf(reader.findData("map_right", "-1"));
 		
 		// search for NPCs
 		for(int i=0; i<Maps.MAX_MAP_NPCS; i++) {
