@@ -17,6 +17,8 @@ public class Maps {
 	public static final int MAX_MAP_NPCS = 30;
 	public static ArrayList<MapData> maps = new ArrayList<MapData>();
 	
+	public static int spawnMap;
+	
 	public static void initMaps() throws SlickException {
 		maps.clear();
 		

@@ -1,7 +1,6 @@
 package net.indierising.momentum.server;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.indierising.momentum.server.entities.ClassSystem;
@@ -31,14 +30,7 @@ public class Main extends BasicGame{
 		
 		// TODO error log in data folder	
 		TagReader config = null;
-		try {
-			config = new TagReader(new File("data/config.txt"));
-			config.read();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		config = new TagReader(new File("data/config.txt"));
 		
 		// get the port numbers from our config file
 		int tcp_port = Integer.parseInt(config.findData("tcp_port"));

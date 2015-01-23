@@ -2,7 +2,6 @@ package net.indierising.momentum.server.entities;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 
 import net.indierising.momentum.server.Globals;
 import net.indierising.momentum.server.entitydata.NPCData;
+import net.indierising.momentum.server.maps.Maps;
 import net.indierising.momentum.server.network.Network;
 import net.indierising.momentum.server.network.Packets.PlayerPacket;
 import net.indierising.momentum.server.utils.TagReader;
@@ -50,7 +50,7 @@ public class EntityHandler {
 
 	// check if we have the player saved, otherwise create a new file with their username
 	public static void addPlayer(PlayerPacket packet) throws IOException{
-		float x = 0, y = 0;
+		float x = Maps.maps.get(Maps.spawnMap).spawnX, y = Maps.maps.get(Maps.spawnMap).spawnY;
 		File userData = new File("data/entities/players/" + packet.data.username + ".mo");
 	
 		if(!userData.exists()){
@@ -59,21 +59,19 @@ public class EntityHandler {
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
-			bw.write("<y>" + y);
+			bw.write("<y>" + y + "\n");
+			bw.write("<sprite>data/assets/sprites/player.png \n");
+			bw.write("<map>" + Maps.spawnMap);
 			bw.close();
 		}
 	
 		// load our information about the user here.
 		TagReader reader;
-		try {
-			reader = new TagReader(userData);
-			reader.read();
-			packet.data.x = Float.parseFloat(reader.findData("x"));
-			packet.data.y = Float.parseFloat(reader.findData("y"));
-			packet.data.imageLoc = reader.findData("sprite");
-		} catch (FileNotFoundException e) {
-			System.out.println("Data on player not found.");
-		}
+		reader = new TagReader(userData);
+		packet.data.x = Float.parseFloat(reader.findData("x"));
+		packet.data.y = Float.parseFloat(reader.findData("y"));
+		packet.data.imageLoc = reader.findData("sprite");
+		packet.data.map = Integer.parseInt(reader.findData("map", String.valueOf(Maps.spawnMap)));
 		
 		players.add(new Player(packet.data));
 	}
@@ -88,11 +86,6 @@ public class EntityHandler {
 		
 		for(int i = 0; i < matchingFiles.length; i++){
 			TagReader reader = new TagReader(new File("data/entities/npcs/" + matchingFiles[i].getName()));
-			try {
-				reader.read();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			
 			NPCData data = new NPCData();
 			data.name = reader.findData("name");
@@ -123,6 +116,7 @@ public class EntityHandler {
 			bw.write("<class>" + player.getPlayerClass());
 			bw.write("<x>" + player.getX() + "\n");
 			bw.write("<y>" + player.getY() + "\n");
+			bw.write("<map>" + player.getMap());
 			bw.close();
 		}
 		

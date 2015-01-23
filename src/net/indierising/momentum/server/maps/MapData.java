@@ -13,6 +13,7 @@ public class MapData {
 	File dataFile;
 	public String name; int mapType;
 	public TiledMap map; public Rectangle blockedRect[][];
+	public float spawnX, spawnY;
 	public int[] nextMap = new int[4];
 	
 	public MapData(String mapNum) throws SlickException {
@@ -25,6 +26,21 @@ public class MapData {
 		// get some useful info about the map
 		name = reader.findData("map", "A Map");
 		mapType = Integer.valueOf(reader.findData("type", "0"));
+		
+		// is it a spawn?
+		boolean isSpawn = reader.findData("spawn_map", "false").equals("true");
+		if(isSpawn) {
+			mapNum = mapNum.substring(0, 4);
+			int thisMapNum = Integer.valueOf(mapNum) - 1;
+			
+			Maps.spawnMap = thisMapNum;
+		}
+		
+		// get the spawn location
+		String[] defaultSpawn = {"0", "0"};
+		String[] spawn = reader.findParameterData("spawn_loc", defaultSpawn);
+		spawnX = Float.valueOf(spawn[0])*Maps.TILE_SIZE;
+		spawnY = Float.valueOf(spawn[1])*Maps.TILE_SIZE;
 		
 		// look for the maps around it
 		nextMap[Globals.DIR_UP] = Integer.valueOf(reader.findData("map_up", "-1"));

@@ -94,27 +94,79 @@ public class Player extends Entity {
 		}
 		
 		// check if they've gone outside the map
-		if(getY()<0) {
-			// north
+		if(getY()<-Maps.TILE_SIZE) {
+			// up
 			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_UP]!=-1) {
 				PlayerMapChange packet = new PlayerMapChange();
 				packet.playerID = getConnectionID();
 				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_UP]-1;
 				packet.mapName = Maps.maps.get(packet.mapID).name;
 				Network.server.sendToAllTCP(packet);
+				changeMap(packet.mapID, Globals.DIR_UP);
+				
+				return true;
 			}
 		} else if(getY()+getHeight()/2>Maps.maps.get(getMap()).map.getHeight()*Maps.TILE_SIZE) {
-			// south
+			// down
 			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_DOWN]!=-1) {
 				PlayerMapChange packet = new PlayerMapChange();
 				packet.playerID = getConnectionID();
 				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_DOWN]-1;
 				packet.mapName = Maps.maps.get(packet.mapID).name;
 				Network.server.sendToAllTCP(packet);
+				changeMap(packet.mapID, Globals.DIR_DOWN);
+				
+				return true;
+			}
+		} else if(getX()<-Maps.TILE_SIZE) {
+			// left
+			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_LEFT]!=-1) {
+				PlayerMapChange packet = new PlayerMapChange();
+				packet.playerID = getConnectionID();
+				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_LEFT]-1;
+				packet.mapName = Maps.maps.get(packet.mapID).name;
+				Network.server.sendToAllTCP(packet);
+				changeMap(packet.mapID, Globals.DIR_LEFT);
+				
+				return true;
+			}
+		} else if(getX()+getWidth()>Maps.maps.get(getMap()).map.getWidth()*Maps.TILE_SIZE) {
+			// right
+			if(Maps.maps.get(getMap()).nextMap[Globals.DIR_RIGHT]!=-1) {
+				PlayerMapChange packet = new PlayerMapChange();
+				packet.playerID = getConnectionID();
+				packet.mapID = Maps.maps.get(getMap()).nextMap[Globals.DIR_RIGHT]-1;
+				packet.mapName = Maps.maps.get(packet.mapID).name;
+				Network.server.sendToAllTCP(packet);
+				changeMap(packet.mapID, Globals.DIR_RIGHT);
+				
+				return true;
 			}
 		}
 		
 		return false;
+	}
+	
+	// move to spawn
+	private void changeMap(int mapID, int dir) {
+		setMap(mapID);
+		
+		// move 'em
+		switch(dir) {
+		case Globals.DIR_UP:
+			setY((Maps.maps.get(mapID).map.getHeight()*Maps.TILE_SIZE)-(Maps.TILE_SIZE*2));
+			break;
+		case Globals.DIR_DOWN:
+			setY(0);
+			break;
+		case Globals.DIR_LEFT:
+			setX(0);
+			break;
+		case Globals.DIR_RIGHT:
+			setX((Maps.maps.get(mapID).map.getWidth()*Maps.TILE_SIZE)-(Maps.TILE_SIZE*2));
+		}
+		
+		Network.sendMovement(getConnectionID());
 	}
 	
 	public int getConnectionID() {

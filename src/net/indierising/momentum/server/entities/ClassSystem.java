@@ -2,11 +2,11 @@ package net.indierising.momentum.server.entities;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import net.indierising.momentum.server.utils.TagReader;
-import net.indierising.momentum.server.network.Packets.PlayerClass;;
+import net.indierising.momentum.server.network.Packets.PlayerClass;
+
 /**
  * This class contains information about player classes, including definitions and loading.
  */
@@ -23,11 +23,6 @@ public class ClassSystem {
 		
 		for(int i = 0; i < matchingFiles.length; i++){
 			TagReader reader = new TagReader(new File("data/entities/classes/" + matchingFiles[i].getName()));
-			try {
-				reader.read();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			
 			// create a temporary class to add to our data
 			PlayerClass temp = new PlayerClass();
