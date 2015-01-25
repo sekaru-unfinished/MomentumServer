@@ -4,6 +4,6 @@
 <width>32
 <height>64
 <speed>3
-<sprite>data/assets/sprites/player.png
+<sprite>player
 <health>50
 <damage>50

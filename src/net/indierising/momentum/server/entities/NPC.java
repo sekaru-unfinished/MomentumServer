@@ -11,9 +11,9 @@ public class NPC extends Entity {
 	
 	public NPC(NPCData data) {
 		super(data.id, new Vector2f(data.x, data.y), data.width, data.height, data.speed, data.dir, data.imageLoc);
-		this.setHealth(health);
-		this.setDamage(damage);
-		this.setName(name);
+		this.setHealth(data.health);
+		this.setDamage(data.damage);
+		this.setName(data.name);
 		this.setCollisionBox(getX(), getY(), getWidth(), getHeight());
 	}
 	

@@ -75,6 +75,7 @@ public class Network {
 	
 	public static void sendConstants(Connection con) {
 		ConstantsPacket packet = new ConstantsPacket();
+		packet.conID = con.getID();
 		packet.TILE_SIZE = Maps.TILE_SIZE;
 		packet.MAX_MAPS = Maps.MAX_MAPS;
 		packet.MAX_MAP_NPCS = Maps.MAX_MAP_NPCS;
@@ -95,6 +96,18 @@ public class Network {
 		PlayerPacket packet = new PlayerPacket();
 		packet.data = player.toPlayerData();
 		server.sendToAllTCP(packet);
+	}
+	
+	public static void sendPlayersTo(int connectionID) {
+		for(int i=1; i<connectionID; i++) {
+			Player player = EntityHandler.getPlayerByID(i);
+			
+			if(player!=null) {
+				PlayerPacket packet = new PlayerPacket();
+				packet.data = player.toPlayerData();
+				server.sendToTCP(connectionID, packet);
+			}
+		}
 	}
 	
 	public static void sendMovement(int connectionID) {

@@ -60,7 +60,7 @@ public class EntityHandler {
 			bw.write("<name>" + packet.data.username + "\n");
 			bw.write("<x>" + x + "\n");
 			bw.write("<y>" + y + "\n");
-			bw.write("<sprite>data/assets/sprites/player.png \n");
+			bw.write("<sprite>player \n");
 			bw.write("<map>" + Maps.spawnMap);
 			bw.close();
 		}

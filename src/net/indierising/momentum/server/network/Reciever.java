@@ -23,8 +23,11 @@ public class Reciever extends Listener{
 		if(object instanceof PlayerPacket) {
 			// send them the constants
 			Network.sendConstants(connection);
+			
+			// send them everyone else
+			Network.sendPlayersTo(connection.getID());
 				
-			// send them the new player
+			// send everyone the new player
 			PlayerPacket packet = (PlayerPacket) object;
 			try {
 				packet.data.connectionID = connection.getID();
