@@ -35,22 +35,22 @@ public class Player extends Entity {
 		
 		if(up) {
 			dy-=getSpeed();
-			dir = Globals.DIR_UP;
+			setDir(Globals.DIR_UP);
 		}
 		
 		if(down) {
 			dy+=getSpeed();
-			dir = Globals.DIR_DOWN;
+			setDir(Globals.DIR_DOWN);
 		}
 		
 		if(left) {
 			dx-=getSpeed();
-			dir = Globals.DIR_LEFT;
+			setDir(Globals.DIR_LEFT);
 		}
 		
 		if(right) {
 			dx+=getSpeed();
-			dir = Globals.DIR_RIGHT;
+			setDir(Globals.DIR_RIGHT);
 		}
 		
 		float nx = getX()+dx;
@@ -193,16 +193,16 @@ public class Player extends Entity {
 		this.map = map;
 	}
 	
-	// convert to a sendable object
-	public PlayerData toPlayerData() {
-		return new PlayerData(this);
-	}
-
 	public void setPlayerClass(PlayerClass playerClass) {
 		this.playerClass = playerClass;
 	}
 
 	public PlayerClass getPlayerClass() {
 		return playerClass;
+	}
+	
+	// convert to a sendable object
+	public PlayerData toPlayerData() {
+		return new PlayerData(this);
 	}
 }

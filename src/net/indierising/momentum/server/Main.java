@@ -25,6 +25,7 @@ public class Main extends BasicGame{
 	public void init(GameContainer gc) throws SlickException {
 		// init maps
 		Maps.initMaps();
+		
 		// load player classes
 		ClassSystem.loadClasses();
 		

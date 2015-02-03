@@ -13,7 +13,8 @@ import net.indierising.momentum.server.network.Packets.PlayerClass;
 public class ClassSystem {
 	public static ArrayList<PlayerClass> data = new ArrayList<PlayerClass>();
 	
-	public static void loadClasses(){
+	public static void loadClasses() {
+		// find files with the ".mo" extension
 		File f = new File("data/entities/classes");
 		File[] matchingFiles = f.listFiles(new FilenameFilter() {
 		    public boolean accept(File dir, String name) {

@@ -4,10 +4,10 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Entity {
+	int id;
 	private float width, height;
 	protected Vector2f pos;
-	int dir;
-	int id;
+	private int dir;
 	private float speed;
 	private String imageLoc;
 	private Rectangle entityRect;
@@ -72,9 +72,7 @@ public class Entity {
 		this.speed = speed;
 	}
 
-	public void update(int delta) {
-		setX(getX() + 0.3f);
-	}
+	public void update(int delta) {}
 
 	public void setWidth(float width) {
 		this.width = width;

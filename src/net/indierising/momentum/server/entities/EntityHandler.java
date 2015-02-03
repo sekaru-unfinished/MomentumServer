@@ -3,7 +3,6 @@ package net.indierising.momentum.server.entities;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,23 +17,13 @@ public class EntityHandler {
 	public static ArrayList<Player> players = new ArrayList<Player>();
 	public static ArrayList<NPC> npcs = new ArrayList<NPC>();
 	
-	public static void update(int delta){
-		for(int i = 0; i < players.size(); i++){
-			players.get(i).update(delta);
-		}
-		for(int i = 0; i < npcs.size(); i++){
-			npcs.get(i).update(delta);
-			Network.sendNPCMovement(npcs.get(i).id);
-		}
-	}
-	
 	public static Player getPlayerByID(int connectionID){
 		for(int i = 0; i < players.size(); i++) {
 			if(players.get(i).getConnectionID() == connectionID){
 				return players.get(i);
 			}
 		}
-		// if we can't find them sorry
+		// if we can't find them
 		return null;
 	}
 	
@@ -44,7 +33,7 @@ public class EntityHandler {
 				return npcs.get(i);
 			}
 		}
-		// if we can't find them sorry
+		// if we can't find them
 		return null;
 	}
 
@@ -76,38 +65,11 @@ public class EntityHandler {
 		players.add(new Player(packet.data));
 	}
 	
-	public static void loadNPCS(){
-		File f = new File("data/entities/npcs/");
-		File[] matchingFiles = f.listFiles(new FilenameFilter() {
-		    public boolean accept(File dir, String name) {
-		        return name.endsWith("mo");
-		    }
-		});
-		
-		for(int i = 0; i < matchingFiles.length; i++){
-			TagReader reader = new TagReader(new File("data/entities/npcs/" + matchingFiles[i].getName()));
-			
-			NPCData data = new NPCData();
-			data.name = reader.findData("name");
-			data.imageLoc = reader.findData("sprite");
-			data.x = Float.parseFloat(reader.findData("x"));
-			data.y = Float.parseFloat(reader.findData("y"));
-			data.speed = Float.parseFloat(reader.findData("speed"));
-			data.health = Integer.parseInt(reader.findData("health"));
-			data.damage = Integer.parseInt(reader.findData("damage"));
-			data.width = Integer.parseInt(reader.findData("width"));
-			data.height = Integer.parseInt(reader.findData("height"));
-			data.dir = Globals.DIR_RIGHT;
-			npcs.add(new NPC(data));
-		}
-	}
-	
 	public static void logout(int connectionID) throws IOException{
 		Player player = getPlayerByID(connectionID);
 		if(player==null) return;
 		
 		File userData = new File("data/entities/players/" + player.getUsername() + ".dat");
-				
 		if(userData.exists()) {
 			userData.createNewFile();
 			FileWriter fw = new FileWriter(userData.getAbsoluteFile());
@@ -121,5 +83,36 @@ public class EntityHandler {
 		}
 		
 		players.remove(player);
+	}
+	
+	public static void addNPC(String name, int map, float x, float y){
+		TagReader reader = new TagReader(new File("data/entities/npcs/" + name + ".mo"));
+		NPCData data = new NPCData();
+		data.id = npcs.size();
+		data.name = reader.findData("name");
+		data.imageLoc = reader.findData("sprite");
+		data.map = map;
+		data.x = x;
+		data.y = y;
+		data.dir = Integer.parseInt(reader.findData("dir", String.valueOf(Globals.DIR_DOWN)));
+		data.speed = Float.parseFloat(reader.findData("speed"));
+		data.health = Integer.parseInt(reader.findData("health"));
+		data.damage = Integer.parseInt(reader.findData("damage"));
+		data.width = Integer.parseInt(reader.findData("width"));
+		data.height = Integer.parseInt(reader.findData("height"));
+		npcs.add(new NPC(data));
+	}
+	
+	public static void update(int delta) {
+		// players
+		for(int i = 0; i < players.size(); i++) {
+			players.get(i).update(delta);
+		}
+		
+		// npcs
+		for(int i = 0; i < npcs.size(); i++){
+			npcs.get(i).update(delta);
+			Network.sendNPCMovement(npcs.get(i).id);
+		}
 	}
 }

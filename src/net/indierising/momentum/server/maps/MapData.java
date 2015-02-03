@@ -3,6 +3,7 @@ package net.indierising.momentum.server.maps;
 import java.io.File;
 
 import net.indierising.momentum.server.Globals;
+import net.indierising.momentum.server.entities.EntityHandler;
 import net.indierising.momentum.server.utils.TagReader;
 
 import org.newdawn.slick.SlickException;
@@ -27,12 +28,13 @@ public class MapData {
 		name = reader.findData("map", "A Map");
 		mapType = Integer.valueOf(reader.findData("type", "0"));
 		
+		// get the id of this map
+		mapNum = mapNum.substring(3, 4);
+		int thisMapNum = Integer.valueOf(mapNum) - 1;
+		
 		// is it a spawn?
 		boolean isSpawn = reader.findData("spawn_map", "false").equals("true");
 		if(isSpawn) {
-			mapNum = mapNum.substring(0, 4);
-			int thisMapNum = Integer.valueOf(mapNum) - 1;
-			
 			Maps.spawnMap = thisMapNum;
 		}
 		
@@ -43,15 +45,16 @@ public class MapData {
 		spawnY = Float.valueOf(spawn[1])*Maps.TILE_SIZE;
 		
 		// look for the maps around it
-		nextMap[Globals.DIR_UP] = Integer.valueOf(reader.findData("map_up", "-1"));
-		nextMap[Globals.DIR_DOWN] = Integer.valueOf(reader.findData("map_down", "-1"));
-		nextMap[Globals.DIR_LEFT] = Integer.valueOf(reader.findData("map_left", "-1"));
-		nextMap[Globals.DIR_RIGHT] = Integer.valueOf(reader.findData("map_right", "-1"));
+		nextMap[Globals.DIR_UP] = Integer.parseInt(reader.findData("map_up", "-1"));
+		nextMap[Globals.DIR_DOWN] = Integer.parseInt(reader.findData("map_down", "-1"));
+		nextMap[Globals.DIR_LEFT] = Integer.parseInt(reader.findData("map_left", "-1"));
+		nextMap[Globals.DIR_RIGHT] = Integer.parseInt(reader.findData("map_right", "-1"));
 		
 		// search for NPCs
 		for(int i=0; i<Maps.MAX_MAP_NPCS; i++) {
 			if(reader.findData("npc" + (i+1))!=null) {
-				// TODO add to an NPC arraylist
+				String[] npcData = reader.findParameterData("npc" + (i+1));
+				EntityHandler.addNPC(npcData[0], thisMapNum, Float.parseFloat(npcData[1])*Maps.TILE_SIZE, Float.parseFloat(npcData[2])*Maps.TILE_SIZE);
 			}
 		}
 		

@@ -18,6 +18,7 @@ public class Globals {
 	public static ArrayList<String> log = new ArrayList<String>();
 	public static void log(String message){
 		log.add(message);
+		
 		// TODO save the log when exiting
 		System.out.println(message);
 	}

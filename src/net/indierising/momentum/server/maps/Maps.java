@@ -2,8 +2,6 @@ package net.indierising.momentum.server.maps;
 
 import java.util.ArrayList;
 
-import net.indierising.momentum.server.entities.EntityHandler;
-
 import org.newdawn.slick.SlickException;
 
 public class Maps {
@@ -26,8 +24,5 @@ public class Maps {
 		for(int i=0; i<MAX_MAPS; i++) {
 			maps.add(new MapData("map" + (i+1)));
 		}
-		
-		// load npcs
-		EntityHandler.loadNPCS();
 	}
 }

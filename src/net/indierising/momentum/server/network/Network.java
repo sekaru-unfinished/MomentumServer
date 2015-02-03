@@ -138,7 +138,7 @@ public class Network {
 	}
 	
 	public static void sendNPCS(int id) {
-		for(int i = 0; i < EntityHandler.npcs.size(); i++){
+		for(int i = 0; i < EntityHandler.npcs.size(); i++) {
 			sendNPC(i,id);
 		}
 	}
